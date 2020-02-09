@@ -211,7 +211,7 @@ void Battle::DoSpecialAttack(int round, Soldier *a, Army *attackers,
 		num = def->DoAnAttack(this, a->special, realtimes,
 				spd->damage[i].type, a->slevel,
 				spd->damage[i].flags, spd->damage[i].dclass,
-				spd->damage[i].effect, 0, a);
+				spd->damage[i].effect, 0, a, attackers);
 		if (spd->effectflags & SpecialType::FX_DONT_COMBINE && num != -1) {
 			if (spd->damage[i].effect == NULL) {
 				results[dam] = AString("killing ") + num;
