@@ -31,12 +31,11 @@
 #include <string>
 #include <iterator>
 
-#define RELICS_REQUIRED_FOR_AVATAR	10
 #define MINIMUM_ACTIVE_QUESTS		5
 #define MAXIMUM_ACTIVE_QUESTS		15
 #define QUEST_EXPLORATION_PERCENT	30
 #define QUEST_SPAWN_RATE		5
-#define QUEST_MAX_REWARD		4000
+#define QUEST_MAX_REWARD		3000
 #define QUEST_SPAWN_CHANCE		70
 #define MAX_DESTINATIONS		5
 
@@ -173,16 +172,6 @@ static void CreateQuest(ARegionList *regions, int monfaction)
 		}
 	}
 
-	// 20% chance to drop I_RELICOFGRACE from quest in addition to regular reward
-	d = getrandom(100);
-	if (d < 25) {
-		item = new Item;
-		item->type = I_RELICOFGRACE;
-		item->num = 1;
-		q->rewards.Add(item);	
-		printf("\nQuest reward: Relic.\n");
-	}
-
 	d = getrandom(100);
 	if (d < 60) {
 		// SLAY quest
@@ -224,7 +213,6 @@ static void CreateQuest(ARegionList *regions, int monfaction)
 					if (u->faction->num == monfaction) {
 						if (!d--) {
 							q->target = u->num;
-							
 						}
 					}
 				}
@@ -499,7 +487,7 @@ Faction *Game::CheckVictory()
 			WriteTimesArticle(message);
 		} else if (d == 3) {
 			message = "Go into all the world, and tell all "
-				"people that The Devourer, Great Enemy is coming.";
+				"people that new world is great.";
 			WriteTimesArticle(message);
 		} else if (d == 4 || d == 5) {
 			message = "Players have visited ";
@@ -628,7 +616,7 @@ Faction *Game::CheckVictory()
 								message += " have not been visited by exiles.";
 								break;
 							case 1:
-								message += " have not yet heard news of The Devourer.";
+								message += " are still in need of your guidance.";
 								break;
 							case 2:
 								message += " have not yet been graced by your presence.";
@@ -837,6 +825,9 @@ void Game::ModifyTablesPerRuleset(void)
 	DisableItem(I_WOOL);
 	DisableItem(I_MINK);
 	DisableItem(I_DYES);
+
+	// Disable items
+	DisableItem(I_SUPERBOW);
 
 	// No staff of lightning
 	DisableSkill(S_CREATE_STAFF_OF_LIGHTNING);
