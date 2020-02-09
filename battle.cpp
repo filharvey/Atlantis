@@ -96,7 +96,7 @@ void Battle::DoAttack(int round, Soldier *a, Army *attackers, Army *def,
 				num = def->DoAnAttack(this, pMt->mountSpecial, realtimes,
 						spd->damage[i].type, pMt->specialLev,
 						spd->damage[i].flags, spd->damage[i].dclass,
-						spd->damage[i].effect, 0, a);
+						spd->damage[i].effect, 0, a, attackers);
 				if (num != -1) {
 					if (tot == -1) tot = num;
 					else tot += num;
@@ -141,8 +141,9 @@ void Battle::DoAttack(int round, Soldier *a, Army *attackers, Army *def,
 			mountBonus = pWep->mountBonus;
 			attackClass = pWep->weapClass;
 		}
+		//
 		def->DoAnAttack(this, NULL, 1, attackType, a->askill, flags, attackClass,
-				NULL, mountBonus, a);
+				NULL, mountBonus, a, attackers);
 		if (!def->NumAlive()) break;
 	}
 
@@ -190,6 +191,7 @@ void Battle::NormalRound(int round,Army * a,Army * b)
 		{
 			Soldier * s = a->GetAttacker(num, behind);
 			DoAttack(a->round, s, a, b, behind);
+			// ---
 		}
 		aalive = a->NumAlive();
 		balive = b->NumAlive();
@@ -287,11 +289,13 @@ int Battle::Run( ARegion * region,
 				tactics_bonus = armies[0]->tac - armies[1]->tac;
 				if (tactics_bonus > 3) tactics_bonus = 3;
 				armies[0]->tactics_bonus = tactics_bonus;
+				AddLine(AString("Army 0 bonus ") + tactics_bonus);
 			}
 			if (armies[1]->tac > armies[0]->tac) {
 				tactics_bonus = armies[1]->tac - armies[0]->tac;
 				if (tactics_bonus > 3) tactics_bonus = 3;
 				armies[1]->tactics_bonus = tactics_bonus;
+				AddLine(AString("Army 1 bonus ") + tactics_bonus);
 			}
 		} else {
 			if (armies[0]->tac > armies[1]->tac) FreeRound(armies[0],armies[1]);

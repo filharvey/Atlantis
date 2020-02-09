@@ -1119,7 +1119,7 @@ int Army::RemoveEffects(int num, char const *effect)
 
 int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attackType,
 		int attackLevel, int flags, int weaponClass, char const *effect,
-		int mountBonus, Soldier *attacker)
+		int mountBonus, Soldier *attacker, Army *attackers)
 {
 	/* 1. Check against Global effects (not sure how yet) */
 	/* 2. Attack shield */
@@ -1202,14 +1202,14 @@ int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attack
 		/* 4.3 Add bonuses versus mounted */
 		if (tar->riding != -1) attackLevel += mountBonus;
 
-		b->AddLine(AString("Attack level: ") + attackLevel + ".");
+		b->AddLine(attacker->name + AString(" attack level: ") + attackLevel + ".");
 
 		/* 4.4 Add advanced tactics bonus */
 		if (Globals->ADVANCED_TACTICS) {
-			attackLevel += tactics_bonus;
+			attackLevel +=  attackers->tactics_bonus;
 		}
 		
-		b->AddLine(AString("New attack level: ") + attackLevel + ".");
+		b->AddLine(attacker->name + AString(" new attack level: ") + attackLevel + ".");
 
 		/* 5. Attack soldier */
 		if (attackType != NUM_ATTACK_TYPES) {
