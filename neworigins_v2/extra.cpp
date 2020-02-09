@@ -772,15 +772,6 @@ void Game::ModifyTablesPerRuleset(void)
 		ModifyTerrainEconomy(R_NEXUS, 1000, 15, 50, 2);
 	}
 
-	// Disable tools
-	DisableItem(I_AXE);
-	DisableItem(I_HAMMER);
-	DisableItem(I_NET);
-	DisableItem(I_LASSO);
-	DisableItem(I_BAG);
-	DisableItem(I_SPINNING);
-	DisableItem(I_PICK);
-
 	EnableItem(I_CAMEL);
 	EnableItem(I_MCROSSBOW);
 	EnableItem(I_MWAGON);
