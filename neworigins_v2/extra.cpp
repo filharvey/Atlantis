@@ -1018,7 +1018,7 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyRaceSkills("IDWA", 2, "MINI");
 	ModifyRaceSkills("IDWA", 3, "FARM");
 	ModifyRaceSkills("IDWA", 4, "ARMO");
-	ModifyRaceSkills("IDWA", 5, "BUIL");
+	ModifyRaceSkills("IDWA", 5, "GCUT");
 
 	EnableItem(I_UNDERDWARF);
 	ModifyItemBasePrice(I_UNDERDWARF, 40);
@@ -1037,6 +1037,7 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyRaceSkills("HELF", 2, "LBOW");
 	ModifyRaceSkills("HELF", 3, "SHIP");
 	ModifyRaceSkills("HELF", 4, "SAIL");
+	ModifyRaceSkills("HELF", 5, "FISH");
 
 	EnableItem(I_WOODELF);
 	ModifyItemBasePrice(I_WOODELF, 40);
@@ -1045,7 +1046,7 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyRaceSkills("WELF", 1, "LBOW");
 	ModifyRaceSkills("WELF", 2, "HERB");
 	ModifyRaceSkills("WELF", 3, "WEAP");
-	ModifyRaceSkills("WELF", 4, "ENTE");
+	ModifyRaceSkills("WELF", 4, "FISH");
 	ModifyRaceSkills("WELF", 5, "CARP");
 
 	EnableItem(I_DROWMAN);
@@ -1064,7 +1065,7 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyRaceSkills("GNOM", 1, "QUAR");
 	ModifyRaceSkills("GNOM", 2, "BUIL");
 	ModifyRaceSkills("GNOM", 3, "XBOW");
-	ModifyRaceSkills("GNOM", 4, "FARM");
+	ModifyRaceSkills("GNOM", 4, "GCUT");
 	ModifyRaceSkills("GNOM", 5, "ENTE");
 	ModifyItemCapacities(I_GNOME,9,0,0,0);
 	ModifyItemWeight(I_GNOME, 5);
@@ -1107,7 +1108,7 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyRaceSkills("GNOL", 1, "HUNT");
 	ModifyRaceSkills("GNOL", 2, "COMB");
 	ModifyRaceSkills("GNOL", 3, "ARMO");
-	ModifyRaceSkills("GNOL", 4, "CAME");
+	ModifyRaceSkills("GNOL", 4, "FISH");
 
 	EnableItem(I_ORC);
 	ModifyItemBasePrice(I_ORC, 40);
