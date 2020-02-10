@@ -1819,7 +1819,7 @@ ItemType id[] =
 	 "", { "", "", "", "" }, 0, 0},
 	{"camel","camels","CAME",
 	 ItemType::DISABLED | ItemType::NOTRANSPORT,
-	 "CAME",1,1,1, {{-1,0},{-1,0},{-1,0},{-1,0}},
+	 "HORS",1,1,1, {{-1,0},{-1,0},{-1,0},{-1,0}},
 	 NULL,0,0, {{-1,0},{-1,0},{-1,0},{-1,0}},
 	 50, IT_NORMAL|IT_MOUNT,30,1,
 	 70,70,0,0,4,
