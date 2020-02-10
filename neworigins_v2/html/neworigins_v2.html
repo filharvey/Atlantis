@@ -3,18 +3,18 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link type="text/css" rel="stylesheet" href="neworigins.css">
+    <link type="text/css" rel="stylesheet" href="neworigins_v2.css">
     <title>
-      NewOrigins 1.0.1 Rules
+      NewOrigins2 1.0.0 Rules
     </title>
   </head>
   <body>
     <center>
       <h1>
-        Rules for NewOrigins 1.0.1
+        Rules for NewOrigins2 1.0.0
       </h1>
       <h1>
-        Based on Atlantis v5.2.0
+        Based on Atlantis v5.2.4
       </h1>
       <h2>
         Copyright 1996 by Geoff Dunbar
@@ -26,7 +26,7 @@
         Copyright 1993 by Russell Wallace
       </h2>
       <h3>
-        Last Change: August 06, 2019
+        Last Change: February 09, 2020
       </h3>
     </center>
     <div class="rule">
@@ -149,6 +149,9 @@
           </li>
           <li>
             <a href="#economy_taxingpillaging">Taxing/Pillaging</a>
+          </li>
+          <li>
+            <a href="#economy_transport">Transporting goods</a>
           </li>
         </ul>
       </li>
@@ -283,6 +286,9 @@
             <a href="#destroy">destroy</a>
           </li>
           <li>
+            <a href="#distribute">distribute</a>
+          </li>
+          <li>
             <a href="#enter">enter</a>
           </li>
           <li>
@@ -391,6 +397,9 @@
             <a href="#teach">teach</a>
           </li>
           <li>
+            <a href="#transport">transport</a>
+          </li>
+          <li>
             <a href="#turn">turn</a>
           </li>
           <li>
@@ -489,7 +498,7 @@
     <p>
     Ancient Scroll you found not only helped you to open Multidimensional
     Portal 
-    but also was saying something about 7 Artifacts of Power. 
+    but also was saying something about 10 Artifacts of Power. 
     Leader who will collect all of them will become an Avatar of Maker 
     and have a God-like powers.
     </p>
@@ -558,10 +567,12 @@
       by taxing or pillaging. Faction Points spent on Trade determine the
       number of regions in which a faction may conduct trade activity. Trade
       activity includes producing goods, building ships and buildings, and
-      buying trade items. Faction Points spent on Magic determine the number
-      of mages and apprentices the faction may have (more information on all
-      of the faction activities is in further sections of the rules). Here is
-      a chart detailing the limits on factions by Faction Points:
+      buying trade items. Faction points spent on Trade also determine the of
+      quartermaster units a trade faction can have. Faction Points spent on
+      Magic determine the number of mages and apprentices the faction may have
+      (more information on all of the faction activities is in further
+      sections of the rules). Here is a chart detailing the limits on factions
+      by Faction Points:
     </p>
     <a name="tablefactionpoints"></a>
     <center>
@@ -574,7 +585,7 @@
             War (max tax regions)
           </th>
           <th>
-            Trade (max trade regions)
+            Trade (max trade regions / quartermasters)
           </th>
           <th>
             Magic (max mages / apprentices)
@@ -588,7 +599,7 @@
             0
           </td>
           <td align="center" nowrap>
-            0
+            0 / 0
           </td>
           <td align="center" nowrap>
             1 / 1
@@ -602,7 +613,7 @@
             15
           </td>
           <td align="center" nowrap>
-            15
+            15 / 2
           </td>
           <td align="center" nowrap>
             2 / 3
@@ -616,7 +627,7 @@
             30
           </td>
           <td align="center" nowrap>
-            30
+            30 / 4
           </td>
           <td align="center" nowrap>
             3 / 5
@@ -630,7 +641,7 @@
             50
           </td>
           <td align="center" nowrap>
-            50
+            50 / 8
           </td>
           <td align="center" nowrap>
             4 / 7
@@ -644,7 +655,7 @@
             75
           </td>
           <td align="center" nowrap>
-            75
+            75 / 12
           </td>
           <td align="center" nowrap>
             5 / 10
@@ -658,7 +669,7 @@
             100
           </td>
           <td align="center" nowrap>
-            100
+            100 / 20
           </td>
           <td align="center" nowrap>
             6 / 15
@@ -671,13 +682,15 @@
       For example, a well rounded faction might spend 2 points on War, 1 point
       on Trade, and 2 points on Magic.  This faction's type would appear as
       "War 2 Trade 1 Magic 2", and would be able to tax 30 regions, perform
-      trade in 15 regions, and have 3 mages as well as 5 apprentices.
+      trade in 15 regions, and have 3 mages as well as 5 apprentices and 2
+      quartermasters.
     </p>
     <p>
       As another example, a specialized faction might spend all 5 points on
       War. This faction's type would appear as "War 5", and it would be able
       to tax 100 regions, but could not perform trade in any regions, could
-      only possess 1 mage, and could only possess 1 apprentice.
+      only possess 1 mage, and could only possess 1 apprentice, and could not
+      possess any quartermasters.
     </p>
     <p>
       Note that it is possible to have a faction type with less than 5 points
@@ -1154,84 +1167,7 @@ Exits:
         </tr>
         <tr>
           <td align="left" nowrap>
-            pick
-          </td>
-          <td align="left" nowrap>
-            1
-          </td>
-          <td align="left" nowrap>
-            &nbsp;
-          </td>
-        </tr>
-        <tr>
-          <td align="left" nowrap>
             spear
-          </td>
-          <td align="left" nowrap>
-            1
-          </td>
-          <td align="left" nowrap>
-            &nbsp;
-          </td>
-        </tr>
-        <tr>
-          <td align="left" nowrap>
-            axe
-          </td>
-          <td align="left" nowrap>
-            1
-          </td>
-          <td align="left" nowrap>
-            &nbsp;
-          </td>
-        </tr>
-        <tr>
-          <td align="left" nowrap>
-            hammer
-          </td>
-          <td align="left" nowrap>
-            1
-          </td>
-          <td align="left" nowrap>
-            &nbsp;
-          </td>
-        </tr>
-        <tr>
-          <td align="left" nowrap>
-            net
-          </td>
-          <td align="left" nowrap>
-            1
-          </td>
-          <td align="left" nowrap>
-            &nbsp;
-          </td>
-        </tr>
-        <tr>
-          <td align="left" nowrap>
-            lasso
-          </td>
-          <td align="left" nowrap>
-            1
-          </td>
-          <td align="left" nowrap>
-            &nbsp;
-          </td>
-        </tr>
-        <tr>
-          <td align="left" nowrap>
-            bag
-          </td>
-          <td align="left" nowrap>
-            1
-          </td>
-          <td align="left" nowrap>
-            &nbsp;
-          </td>
-        </tr>
-        <tr>
-          <td align="left" nowrap>
-            spinning wheel
           </td>
           <td align="left" nowrap>
             1
@@ -1397,10 +1333,11 @@ Exits:
       ocean region to another ocean region, or from a coastal region to an
       ocean region, or from an ocean region to a coastal region. Ships may not
       sail through single hex land masses and must leave via the same side
-      they entered or a side adjacent to that one. Ships can only be
-      constructed in coastal regions. For a fleet to enter any region only
-      costs one movement point; the cost of two movement points for entering,
-      say, a forest coastal region, does not apply.
+      they entered or a side adjacent to that one. Ships ending their movement
+      in a land hex may sail out along any side connecting to water. Ships can
+      only be constructed in coastal regions. For a fleet to enter any region
+      only costs one movement point; the cost of two movement points for
+      entering, say, a forest coastal region, does not apply.
     </p>
     <p>
       A fleet can only move if the total weight of everything aboard does not
@@ -1835,11 +1772,11 @@ Exits:
       lumberjack, quarrying, hunting, fishing, herb lore, horse training,
       weaponsmith, armorer, carpenter, building, shipbuilding, entertainment,
       tactics, combat, riding, crossbow, longbow, stealth, observation,
-      healing, sailing, farming, ranching, camel training, and gemcutting.
-      When a unit possesses a skill, he also has a skill level to go with it. 
-      Generally, the effectiveness of a skill is directly proportional to the
-      skill level involved, so a unit with level 2 in a skill is twice as good
-      as a unit with level 1 in the same skill.
+      healing, sailing, farming, gemcutting, and quartermaster. When a unit
+      possesses a skill, he also has a skill level to go with it.  Generally,
+      the effectiveness of a skill is directly proportional to the skill level
+      involved, so a unit with level 2 in a skill is twice as good as a unit
+      with level 1 in the same skill.
     </p>
     <a name="skills_limitations"></a>
     <h3>
@@ -1920,7 +1857,7 @@ Exits:
             ice dwarves
           </td>
           <td align="left" nowrap>
-            combat, weaponsmith, mining, ranching, armorer, building
+            combat, weaponsmith, mining, farming, armorer, building
           </td>
           <td align="left" nowrap>
             5
@@ -1962,7 +1899,7 @@ Exits:
             orcs
           </td>
           <td align="left" nowrap>
-            mining, lumberjack, combat, building, ranching
+            mining, lumberjack, combat, building
           </td>
           <td align="left" nowrap>
             5
@@ -1990,7 +1927,7 @@ Exits:
             centaurs
           </td>
           <td align="left" nowrap>
-            lumberjack, horse training, riding, longbow, ranching, healing
+            lumberjack, horse training, riding, longbow, farming, healing
           </td>
           <td align="left" nowrap>
             5
@@ -2046,7 +1983,7 @@ Exits:
             gnolls
           </td>
           <td align="left" nowrap>
-            lumberjack, hunting, combat, armorer, camel training
+            lumberjack, hunting, combat, armorer
           </td>
           <td align="left" nowrap>
             5
@@ -2283,7 +2220,7 @@ Shoemaking [SHOE] 3: A unit with this skill may PRODUCE Sooper Dooper
             livestock
           </td>
           <td align="left" nowrap>
-            ranching (1)
+            farming (1)
           </td>
           <td align="left" nowrap>
             
@@ -2496,7 +2433,7 @@ Shoemaking [SHOE] 3: A unit with this skill may PRODUCE Sooper Dooper
             1
           </td>
           <td align="left">
-            Ranged weapon which gives -2 on attack and +0 on defense (needs
+            Ranged weapon which gives +0 on attack and +0 on defense (needs
             longbow skill).<br />
           </td>
         </tr>
@@ -2562,27 +2499,6 @@ Shoemaking [SHOE] 3: A unit with this skill may PRODUCE Sooper Dooper
         </tr>
         <tr>
           <td align="left" nowrap>
-            pick
-          </td>
-          <td align="left" nowrap>
-            weaponsmith (1)
-          </td>
-          <td align="left" nowrap>
-            1 iron
-          </td>
-          <td align="left" nowrap>
-            1 month
-          </td>
-          <td align="left" nowrap>
-            1
-          </td>
-          <td align="left">
-            Weapon which gives +1 on attack and +1 on defense.<br />+1 bonus
-            when producing iron.<br />+1 bonus when producing stone.<br />
-          </td>
-        </tr>
-        <tr>
-          <td align="left" nowrap>
             spear
           </td>
           <td align="left" nowrap>
@@ -2600,142 +2516,6 @@ Shoemaking [SHOE] 3: A unit with this skill may PRODUCE Sooper Dooper
           <td align="left">
             Weapon which gives +1 on attack and +1 on defense.<br />+1 bonus
             when producing furs.<br />
-          </td>
-        </tr>
-        <tr>
-          <td align="left" nowrap>
-            axe
-          </td>
-          <td align="left" nowrap>
-            weaponsmith (1)
-          </td>
-          <td align="left" nowrap>
-            1 wood
-          </td>
-          <td align="left" nowrap>
-            1 month
-          </td>
-          <td align="left" nowrap>
-            1
-          </td>
-          <td align="left">
-            Weapon which gives +1 on attack and +1 on defense.<br />+1 bonus
-            when producing wood.<br />+1 bonus when producing crossbows.<br
-            />+1 bonus when producing longbows.<br />+1 bonus when producing
-            wagons.<br />+1 bonus when producing spears.<br />+1 bonus when
-            producing axes.<br />+1 bonus when producing spinning wheels.<br
-            />+1 bonus when producing javelins.<br />+1 bonus when producing
-            wooden shields.<br />
-          </td>
-        </tr>
-        <tr>
-          <td align="left" nowrap>
-            hammer
-          </td>
-          <td align="left" nowrap>
-            weaponsmith (1)
-          </td>
-          <td align="left" nowrap>
-            1 iron
-          </td>
-          <td align="left" nowrap>
-            1 month
-          </td>
-          <td align="left" nowrap>
-            1
-          </td>
-          <td align="left">
-            Weapon which gives +1 on attack and +1 on defense.<br />+1 bonus
-            when producing swords.<br />+1 bonus when producing chain
-            armor.<br />+1 bonus when producing plate armor.<br />+1 bonus
-            when producing picks.<br />+1 bonus when producing hammers.<br
-            />+1 bonus when producing battle axes.<br />+1 bonus when
-            producing iron shields.<br />
-          </td>
-        </tr>
-        <tr>
-          <td align="left" nowrap>
-            net
-          </td>
-          <td align="left" nowrap>
-            fishing (1)
-          </td>
-          <td align="left" nowrap>
-            1 herb
-          </td>
-          <td align="left" nowrap>
-            1 month
-          </td>
-          <td align="left" nowrap>
-            1
-          </td>
-          <td align="left">
-            +2 bonus when producing fish.<br />
-          </td>
-        </tr>
-        <tr>
-          <td align="left" nowrap>
-            lasso
-          </td>
-          <td align="left" nowrap>
-            herb lore (1)
-          </td>
-          <td align="left" nowrap>
-            1 herb
-          </td>
-          <td align="left" nowrap>
-            1 month
-          </td>
-          <td align="left" nowrap>
-            1
-          </td>
-          <td align="left">
-            +1 bonus when producing livestock.<br />+1 bonus when producing
-            horses.<br />+1 bonus when producing camels.<br />
-          </td>
-        </tr>
-        <tr>
-          <td align="left" nowrap>
-            bag
-          </td>
-          <td align="left" nowrap>
-            herb lore (1)
-          </td>
-          <td align="left" nowrap>
-            1 herb
-          </td>
-          <td align="left" nowrap>
-            1 month
-          </td>
-          <td align="left" nowrap>
-            1
-          </td>
-          <td align="left">
-            +2 bonus when producing grain.<br />+2 bonus when producing
-            herbs.<br />
-          </td>
-        </tr>
-        <tr>
-          <td align="left" nowrap>
-            spinning wheel
-          </td>
-          <td align="left" nowrap>
-            carpenter (1)
-          </td>
-          <td align="left" nowrap>
-            1 wood
-          </td>
-          <td align="left" nowrap>
-            1 month
-          </td>
-          <td align="left" nowrap>
-            1
-          </td>
-          <td align="left">
-            +2 bonus when producing nets.<br />+2 bonus when producing
-            lassoes.<br />+2 bonus when producing bags.<br />+2 bonus when
-            producing leather armor.<br />+2 bonus when producing cloth
-            armor.<br />
           </td>
         </tr>
         <tr>
@@ -2797,7 +2577,7 @@ Shoemaking [SHOE] 3: A unit with this skill may PRODUCE Sooper Dooper
             2
           </td>
           <td align="left">
-            Weapon which gives +4 on attack and +4 on defense.<br />Gives 1
+            Weapon which gives +3 on attack and +3 on defense.<br />Gives 1
             attack every 2 rounds.<br />
           </td>
         </tr>
@@ -2806,7 +2586,7 @@ Shoemaking [SHOE] 3: A unit with this skill may PRODUCE Sooper Dooper
             camel
           </td>
           <td align="left" nowrap>
-            camel training (1)
+            horse training (1)
           </td>
           <td align="left" nowrap>
             
@@ -3184,7 +2964,7 @@ Shoemaking [SHOE] 3: A unit with this skill may PRODUCE Sooper Dooper
             wood or stone
           </td>
           <td align="left" nowrap>
-            ranching (3)
+            farming (3)
           </td>
           <td align="left" nowrap>
             livestock
@@ -3417,6 +3197,20 @@ Shoemaking [SHOE] 3: A unit with this skill may PRODUCE Sooper Dooper
             building (2)
           </td>
         </tr>
+        <tr>
+          <td align="left" nowrap>
+            Caravanserai
+          </td>
+          <td align="left" nowrap>
+            20
+          </td>
+          <td align="left" nowrap>
+            wood or stone
+          </td>
+          <td align="left" nowrap>
+            building (2)
+          </td>
+        </tr>
       </table>
     </center>
     <a name="economy_ships"></a>
@@ -3578,7 +3372,7 @@ Shoemaking [SHOE] 3: A unit with this skill may PRODUCE Sooper Dooper
     </h3>
     <p>
       Units with the Entertainment skill can use it to earn money.  A unit
-      with Entertainment level 1 will earn 20 silver per man by issuing the <a
+      with Entertainment level 1 will earn 30 silver per man by issuing the <a
       href="#entertain">ENTERTAIN</a> order.  The total amount of money that
       can be earned this way is shown in the region descriptions.  Higher
       levels of Entertainment skill can earn more, so a character with
@@ -3627,6 +3421,36 @@ Shoemaking [SHOE] 3: A unit with this skill may PRODUCE Sooper Dooper
       Only units which are able to tax may be on guard.  Units on guard  are
       always visible regardless of Stealth skill, and will be marked as being
       "on guard" in the region description.
+    </p>
+    <a name="economy_transport"></a>
+    <H3>
+      Transportation of goods
+    </H3>
+    <p>
+      Trade factions may train Quartermaster units. A Quartermaster unit may
+      accept <a href="#transport">TRANSPORT</a>ed items from any unit within 1
+      hex distance from the hex containing the quartermaster. Quartermasters
+      may also <a href="#distribute">DISTRIBUTE</a> items to any unit within 1
+      hex distance from the hex containing the quartermaster and may <a
+      href="#transport">TRANSPORT</a> items to another quartermaster up to 3
+      hexes distant.
+    </p>
+    <p>
+      In order to accomplish this function, a quartermaster must be the owner
+      of a structure which allows transportation of items.  The structures
+      which allow this are: Caravanserai.
+    </p>
+    <p>
+      The cost of transport items from one quartermaster to another is based
+      on the weight of the items and costs 5 silver per weight unit.
+    </p>
+    <p>
+      Quartermasters must be single man units, and a faction is limited in the
+      number of quartermasters it may have at any one time. Both the <a
+      href="#transport">TRANSPORT</a> and <a href="#distribute">DISTRIBUTE</a>
+      orders count as trade activity in the hex of the unit issuing the order.
+      The target unit must be at least FRIENDLY to the unit which issues the
+      order.
     </p>
     <a name="com"></a>
     <div class="rule">
@@ -3786,7 +3610,8 @@ Shoemaking [SHOE] 3: A unit with this skill may PRODUCE Sooper Dooper
       means that Avoid Combat is mostly useful for high stealth scouts.) Also,
       all non-avoiding units located in the target region belonging to
       factions allied with the defending unit will join in on the defending
-      side.
+      side, provided that at least one of the units belonging to the defending
+      faction is not set to noaid.
     </p>
     <p>
       Units in adjacent regions can also become involved.  This is the
@@ -3842,7 +3667,8 @@ Shoemaking [SHOE] 3: A unit with this skill may PRODUCE Sooper Dooper
       its side.  If two or more units on one side have the same Tactics skill,
       then the one with the lower unit number is regarded as the leader of
       that side.  If one side's leader has a better Tactics skill than the
-      other side's, then that side gets a free round of attacks.
+      other side's,then that side gets a tactics difference bonus to their
+      attacks.
     </p>
     <p>
       In each combat round, the combatants each get to attack once, in a
@@ -5016,6 +4842,39 @@ DESTROY
           <div class="rule">
             
           </div>
+          <a name="distribute"></a>
+          <h4>
+            DISTRIBUTE [unit] [num] [item]
+          </h4>
+          <h4>
+            DISTRIBUTE [unit] ALL [item]
+          </h4>
+          <h4>
+            DISTRIBUTE [unit] ALL [item] EXCEPT [amount]
+          </h4>
+          <p>
+            Distribute the specified items to the given friendly unit. In the
+            second form, all of that item are distributed.  In the last form,
+            all of that item except for the specified amount are distributed.
+            The unit issuing the distribute order must have the quartermaster
+            skill, and be the owner of a transport structure. Use of this
+            order counts as trade activity in the hex.
+          </p>
+          <p>
+            Examples:
+          </p>
+          <p>
+            Distribute 10 STON to unit 1234
+          </p>
+          <p>
+            
+          </p>
+          <pre>
+DISTRIBUTE 1234 10 STON
+          </pre>
+          <div class="rule">
+            
+          </div>
           <a name="enter"></a>
           <h4>
             ENTER [object]
@@ -5158,7 +5017,9 @@ EXCHANGE 3453 10 SWOR 10 LBOW
             mages by either giving it to another faction or ordering it to <a
             href="#forget">FORGET</a> all its magic skills. If you have too
             many mages for the number of points you try to assign to MAGIC,
-            the FACTION order will fail.
+            the FACTION order will fail. Similar problems could occur with
+            TRADE points and the number of quartermasters controlled by the
+            faction.
           </p>
           <p>
             Examples:
@@ -6563,6 +6424,53 @@ TEACH 510
           <div class="rule">
             
           </div>
+          <a name="transport"></a>
+          <h4>
+            TRANSPORT [unit] [num] [item]
+          </h4>
+          <h4>
+            TRANSPORT [unit] ALL [item]
+          </h4>
+          <h4>
+            TRANSPORT [unit] ALL [item] EXCEPT [amount]
+          </h4>
+          <p>
+            Transport the specified items to the given target. In the second
+            form all of the specified item is transported. In the last form,
+            all of the specified item except for the specified amount is
+            transported. Long distance transportation of goods between 1 and 3
+            hexes away has an associated cost.  This cost is based on the
+            weight of the items being transported. The target of the transport
+            unit must be a unit with the quartermaster skill and must be the
+            owner of a transport structure. For long distance transport
+            between quartermasters, the issuing unit must also be a
+            quartermaster and be the owner of a transport structure.  Use of
+            this order counts as trade activity in the hex.
+          </p>
+          <p>
+            Examples:
+          </p>
+          <p>
+            Transport 10 STON to unit 1234
+          </p>
+          <p>
+            
+          </p>
+          <pre>
+TRANSPORT 1234 10 STON
+          </pre>
+          <p>
+            Transport all except 10 SWOR to unit 3432
+          </p>
+          <p>
+            
+          </p>
+          <pre>
+TRANSPORT 3432 ALL SWOR EXCEPT 10
+          </pre>
+          <div class="rule">
+            
+          </div>
           <a name="turn"></a>
           <h4>
             TURN
@@ -6779,12 +6687,12 @@ WORK
                   href="#describe">DESCRIBE</a>, <a
                   href="#faction">FACTION</a>, <a href="#guard">GUARD</a> 0,
                   <a href="#hold">HOLD</a>, <a href="#name">NAME</a>, <a
-                  href="#noaid">NOAID</a>, <a href="#nocross">NOCROSS</a>, <a
-                  href="#option">OPTION</a>, <a href="#password">PASSWORD</a>,
-                  <a href="#prepare">PREPARE</a>, <a
-                  href="#reveal">REVEAL</a>, <a href="#show">SHOW</a>, <a
-                  href="#spoils">SPOILS</a>, and <a href="#weapon">WEAPON</a>
-                  orders are processed.
+                  href="#noaid">NOAID</a>, <a href="#share">SHARE</a>, <a
+                  href="#nocross">NOCROSS</a>, <a href="#option">OPTION</a>,
+                  <a href="#password">PASSWORD</a>, <a
+                  href="#prepare">PREPARE</a>, <a href="#reveal">REVEAL</a>,
+                  <a href="#show">SHOW</a>, <a href="#spoils">SPOILS</a>, and
+                  <a href="#weapon">WEAPON</a> orders are processed.
                 </li>
                 <li>
                   <a href="#find">FIND</a> orders are processed.
@@ -6925,6 +6833,10 @@ WORK
             </li>
             <li>
               Teleportation spells are <a href="#cast">CAST</a>.
+            </li>
+            <li>
+              <a href="#transport">TRANSPORT</a> and <a
+              href="#distribute">DISTRIBUTE</a> orders are processed.
             </li>
             <li>
               Maintenance costs are assessed.
