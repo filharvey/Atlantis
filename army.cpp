@@ -1204,14 +1204,9 @@ int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attack
 		/* 4.3 Add bonuses versus mounted */
 		if (tar->riding != -1) attackLevel += mountBonus;
 
-		/* 4.4 Add advanced tactics bonus */
-		if (Globals->ADVANCED_TACTICS) {
-			// TODO: debug only, remove later
-			b->AddLine(attacker->name + AString(" attack level: ") + attackLevel + "(+" + attackers->tactics_bonus + ").");
-			b->AddLine(tar->name + AString(" defence level: ") + tlev + "(+" + tactics_bonus + ").");
-			attackLevel +=  attackers->tactics_bonus;
-			tlev += tactics_bonus;
-		}
+		// TODO: debug only, remove later
+		b->AddLine(attacker->name + AString(" attack level: ") + attackLevel + "(+" + attackers->tactics_bonus + ").");
+		b->AddLine(tar->name + AString(" defence level: ") + tlev + "(+" + tactics_bonus + ").");
 
 		/* 5. Attack soldier */
 		if (attackType != NUM_ATTACK_TYPES) {
@@ -1225,7 +1220,8 @@ int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attack
 				}
 			}
 
-			if (!Hits(attackLevel,tlev)) {
+			/* 4.4 Add advanced tactics bonus */
+			if (!Hits(attackLevel + attackers->tactics_bonus, tlev + tactics_bonus)) {
 				continue;
 			}
 		}

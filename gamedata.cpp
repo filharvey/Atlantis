@@ -3284,7 +3284,7 @@ static SkillType sd[] = {
 	 NULL, NULL,
 	 {{"FORC",1},{"PATT",1},{NULL,0}}},
 	{"phantasmal entertainment","PHEN",100,
-	 SkillType::MAGIC,
+	 SkillType::MAGIC | SkillType::CAST,
 	 NULL, NULL,
 	 {{"ILLU",1},{NULL,0},{NULL,0}}},
 	{"create phantasmal beasts","PHBE",100,
