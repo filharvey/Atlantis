@@ -623,9 +623,7 @@ void Army::Reset() {
 	canfront = notfront;
 	canbehind = notbehind;
 	notfront = notbehind;
-	if (tactics_bonus > 0) {
-		tactics_bonus -= 1;
-	}
+	tactics_bonus = 0;
 }
 
 void Army::WriteLosses(Battle * b) {
