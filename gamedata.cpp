@@ -4050,7 +4050,7 @@ static TerrainType td[] = {
 	{"ocean", "ocean", '-', R_OCEAN,
 	 TerrainType::BARREN,
 	 0,0,0,1,
-	 {{I_FISH,100,20},{I_TURT,20,10},{-1,0,0},{-1,0,0},
+	 {{I_FISH,100,20},{I_TURT,20,5},{I_ROUGHGEM,10,5},{-1,0,0},
 	  {-1,0,0},{-1,0,0},{-1,0,0}},
 	 {-1,-1,-1,-1},
 	 {-1,-1,-1},
