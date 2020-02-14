@@ -2297,7 +2297,7 @@ ItemType id[] =
 	 -1,0, 0,
 	 0, NULL, 0,
 	 "", { "", "", "", "" }, 0, 0},
-	{"turtle","turtles","TURT",
+	{"giant turtle","giant turtles","TURT",
 	 ItemType::NOTRANSPORT,
 	 "FISH",3,1,1, {{-1,0}, {-1,0},{-1,0},{-1,0}},
 	 NULL,0,0, {{-1,0},{-1,0},{-1,0},{-1,0}},
