@@ -651,6 +651,10 @@ void ARegion::SetupCityMarket()
 	/* Set up the trade items */
 	int buy1 = getrandom(numtrade);
 	int buy2 = getrandom(numtrade);
+	// TODO: test Add gems from gemcutting as a buy
+	// if (getrandom(100) < 20 && buy1 != I_GEMS) {
+	// 	buy2 = I_GEMS;
+	// }
 	int sell1 = getrandom(numtrade);
 	int sell2 = getrandom(numtrade);
 	int tradebuy = 0;
@@ -805,6 +809,11 @@ void ARegion::AddTown(int size)
  * in the last instance. */
 void ARegion::AddTown(int size, AString * name)
 {
+	// Do not create town in region without any tax
+	if (wealth == 0) {
+		return;
+	}
+
 	town = new TownInfo;
 	town->name = name;
 	SetTownType(size);
