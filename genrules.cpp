@@ -3550,7 +3550,7 @@ int Game::GenRules(const AString &rules, const AString &css,
 			"than the other side's,";
 		
 		if (Globals->ADVANCED_TACTICS) {
-			temp += "then that side gets a tactics difference bonus to their attacks.";
+			temp += "then that side gets a tactics difference bonus to their attack and defense.";
 		} else {
 			temp += "then that side gets a free round of attacks.";
 		}
