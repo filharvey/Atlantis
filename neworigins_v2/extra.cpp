@@ -799,6 +799,15 @@ void Game::ModifyTablesPerRuleset(void)
 	EnableItem(I_ROUGHGEM);
 	EnableItem(I_GEMS);
 
+	// Tools
+	EnableItem(I_PICK);
+	EnableItem(I_AXE);
+	EnableItem(I_HAMMER);
+	EnableItem(I_NET);
+	EnableItem(I_LASSO);
+	EnableItem(I_BAG);
+	EnableItem(I_SPINNING);
+
 	ModifyItemProductionSkill(I_PIKE, "WEAP", 2);
 	ModifyItemProductionSkill(I_LANCE, "WEAP", 2);
 	//
