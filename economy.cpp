@@ -364,6 +364,12 @@ void ARegion::AdjustPop(int adjustment)
 	// split between town and rural pop
 	int tspace = town->hab - town->pop;
 	int rspace = habitat - population;
+
+	// Region with zero room to
+	if (tspace == 0 && rspace == 0) {
+		return;
+	}
+
 	town->pop += adjustment * tspace / (tspace + rspace);
 	if (town->pop < 0) town->pop = 0;
 	population += adjustment * rspace / (tspace + rspace);
