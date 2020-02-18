@@ -1124,6 +1124,7 @@ void Game::ModifyTablesPerRuleset(void)
 	//
 
 	// Upper world
+	// TODO: add ocean
 
 	ClearTerrainRaces(R_PLAIN);
 	ModifyTerrainRace(R_PLAIN, 0, I_HIGHELF);
@@ -1223,7 +1224,7 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyTerrainCoastRace(R_CHASM, 1, I_DROWMAN);
 	ModifyTerrainCoastRace(R_CHASM, 2, I_GNOME);
 	ModifyTerrainEconomy(R_CHASM, 200, 0, 0, 3);
-	ModifyTerrainWMons(R_CHASM, 20, I_DEMON, I_BALROG, I_ETTIN);
+	// ModifyTerrainWMons(R_CHASM, 20, I_DEMON, I_BALROG, I_ETTIN);
 
 	// Modify the various spells which are allowed to cross levels
 	if (Globals->EASIER_UNDERWORLD) {

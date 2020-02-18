@@ -519,17 +519,21 @@ int ARegionList::GetRegType( ARegion *pReg )
 
 	// Underworld region
 	if ((pReg->zloc > 1) && (pReg->zloc < Globals->UNDERWORLD_LEVELS+2)) {
-		int r = getrandom(5);
+		int r = getrandom(9);
 		switch (r) {
 			case 0:
-				return R_OCEAN;
 			case 1:
-				return R_CAVERN;
+				return R_OCEAN;
 			case 2:
-				return R_UFOREST;
 			case 3:
-				return R_TUNNELS;
+				return R_CAVERN;
 			case 4:
+			case 5:
+				return R_UFOREST;
+			case 6:
+			case 7:
+				return R_TUNNELS;
+			case 8:
 				return R_CHASM;
 			default:
 				return( 0 );
