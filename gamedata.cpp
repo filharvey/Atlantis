@@ -2040,7 +2040,7 @@ ItemType id[] =
 	{"flaming sword","flaming swords","FSWO",
 	 ItemType::DISABLED | ItemType::NOMARKET,
 	 NULL,0,0,0, {{-1,0},{-1,0},{-1,0},{-1,0}},
-	 "CFSW",1,1, {{I_SILVER,800},{-1,0},{-1,0},{-1,0}},
+	 "CFSW",1,20, {{I_SILVER,800},{-1,0},{-1,0},{-1,0}},
 	 0,IT_MAGIC | IT_WEAPON | IT_BATTLE, 5000,1,
 	 0,0,0,0,0,
 	 -1,0,
@@ -2818,7 +2818,7 @@ WeaponType wepd[] = {
 	{"FSWO",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
-	 SLASHING, ATTACK_COMBAT, 1,
+	 SLASHING, ATTACK_COMBAT, -2,
 	 4, 4, 0},
 	// WEAPON_MBAXE
 	{"MBAX",

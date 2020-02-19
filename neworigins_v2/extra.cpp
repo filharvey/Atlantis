@@ -1166,7 +1166,7 @@ void Game::ModifyTablesPerRuleset(void)
 	ClearTerrainRaces(R_SWAMP);
 	ModifyTerrainRace(R_SWAMP, 0, I_LIZARDMAN);
 	ModifyTerrainRace(R_SWAMP, 1, I_GOBLINMAN);
-	ModifyTerrainRace(R_SWAMP, 2, I_GNOME);
+	ModifyTerrainRace(R_SWAMP, 2, I_GNOLL);
 	ModifyTerrainRace(R_SWAMP, 3, I_ORC);
 	ModifyTerrainCoastRace(R_SWAMP, 0, I_LIZARDMAN);
 	ModifyTerrainCoastRace(R_SWAMP, 1, I_GOBLINMAN);
@@ -1227,11 +1227,11 @@ void Game::ModifyTablesPerRuleset(void)
 	ClearTerrainRaces(R_CHASM);
 	ModifyTerrainRace(R_CHASM, 0, I_UNDERDWARF);
 	ModifyTerrainRace(R_CHASM, 1, I_DROWMAN);
-	ModifyTerrainRace(R_CHASM, 2, I_GNOME);
+	ModifyTerrainRace(R_CHASM, 2, I_GOBLINMAN);
 	ModifyTerrainRace(R_CHASM, 3, I_ORC);
 	ModifyTerrainCoastRace(R_CHASM, 0, I_UNDERDWARF);
 	ModifyTerrainCoastRace(R_CHASM, 1, I_DROWMAN);
-	ModifyTerrainCoastRace(R_CHASM, 2, I_GNOME);
+	ModifyTerrainCoastRace(R_CHASM, 2, I_GOBLINMAN);
 	ModifyTerrainEconomy(R_CHASM, 200, 0, 0, 3);
 	// ModifyTerrainWMons(R_CHASM, 20, I_DEMON, I_BALROG, I_ETTIN);
 
