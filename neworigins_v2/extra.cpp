@@ -978,7 +978,10 @@ void Game::ModifyTablesPerRuleset(void)
 	EnableItem(I_KRAKEN);
 	EnableItem(I_MERFOLK);
 	EnableItem(I_ELEMENTAL);
+	
+	// New v2 Monsters
 	EnableItem(I_HYDRA);
+	EnableItem(O_BOG);
 
 	//
 	// Change races
