@@ -59,8 +59,8 @@ int *allowedTacticians = ag;
 int allowedTacticiansSize = sizeof(ag) / sizeof(ag[0]);
 
 static GameDefs g = {
-	"NewOrigins2",	// RULESET_NAME
-	MAKE_ATL_VER( 1, 0, 0 ),	// RULESET_VERSION
+	"NewOrigins",	// RULESET_NAME
+	MAKE_ATL_VER( 2, 0, 0 ),	// RULESET_VERSION
 
 	8,	/* MAX_SPEED */
 	7,	/* PHASED_MOVE_OFFSET */
