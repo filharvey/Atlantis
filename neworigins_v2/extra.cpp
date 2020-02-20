@@ -172,6 +172,16 @@ static void CreateQuest(ARegionList *regions, int monfaction)
 		}
 	}
 
+	// 25% chance to drop I_RELICOFGRACE from quest in addition to regular reward
+	d = getrandom(100);
+	if (d < 25) {
+		item = new Item;
+		item->type = I_RELICOFGRACE;
+		item->num = 1;
+		q->rewards.Add(item);	
+		printf("\nQuest reward: Relic.\n");
+	}
+
 	d = getrandom(100);
 	if (d < 60) {
 		// SLAY quest
@@ -798,6 +808,10 @@ void Game::ModifyTablesPerRuleset(void)
 	EnableItem(I_HEALPOTION);
 	EnableItem(I_ROUGHGEM);
 	EnableItem(I_GEMS);
+
+	// Artifacts of power
+	EnableItem(I_RELICOFGRACE);
+	ModifyItemName(I_RELICOFGRACE, "artifact of power", "artifacts of power");
 
 	// Tools
 	EnableItem(I_PICK);
