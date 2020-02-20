@@ -4086,7 +4086,7 @@ static TerrainType td[] = {
 	{"swamp", "swamp", 's', R_SWAMP,
 	 TerrainType::FLYINGMOUNTS,
 	 200,11,10,2,
-	 {{I_WOOD,100,10},{I_FLOATER,25,10},{I_HERBS,100,10},{I_MUSHROOM,10,5},
+	 {{I_WOOD,100,10},{I_FLOATER,25,10},{I_HERBS,100,10},{I_MUSHROOM,25,5},
 	  {-1,0,0},{-1,0,0},{-1,0,0}},
 	 {I_TRIBESMAN,I_TRIBALELF,-1,-1},
 	 {I_VIKING,I_SEAELF,-1},
@@ -4131,7 +4131,7 @@ static TerrainType td[] = {
 	{"underforest", "uforest", 'u', R_UFOREST,
 	 TerrainType::FLYINGMOUNTS,
 	 100,11,10,2,
-	 {{I_WOOD,80,5},{I_STONE,100,10},{I_IRON,80,5},{I_MUSHROOM,20,10},
+	 {{I_WOOD,80,5},{I_STONE,100,10},{I_IRON,80,5},{I_MUSHROOM,25,10},
 	  {-1,0,0},{-1,0,0},{-1,0,0}},
 	 {I_DARKMAN,I_UNDERDWARF,I_ORC,I_GREYELF},
 	 {-1,-1,-1},
@@ -4169,7 +4169,7 @@ static TerrainType td[] = {
 	{"swamp", "island_swamp", 'w', R_SWAMP,
 	 TerrainType::FLYINGMOUNTS,
 	 200,11,10,2,
-	 {{I_WOOD,100,10},{I_FLOATER,25,10},{I_HERBS,100,10},{I_MUSHROOM,10,5},
+	 {{I_WOOD,100,10},{I_FLOATER,25,10},{I_HERBS,100,10},{I_MUSHROOM,25,5},
 	  {-1,0,0},{-1,0,0},{-1,0,0}},
 	 {I_TRIBESMAN,I_TRIBALELF,-1,-1},
 	 {I_VIKING,I_SEAELF,-1},
@@ -4325,7 +4325,7 @@ static TerrainType td[] = {
 	{"swamp", "ceran_swamp1", 's', R_SWAMP,
 	 TerrainType::FLYINGMOUNTS,
 	 200,11,10,2,
-	 {{I_WOOD,100,10},{I_FLOATER,25,10},{I_HERBS,100,10},{I_MUSHROOM,10,5},
+	 {{I_WOOD,100,10},{I_FLOATER,25,10},{I_HERBS,100,10},{I_MUSHROOM,25,5},
 	  {-1,0,0},{-1,0,0},{-1,0,0}},
 	 {I_TRIBESMAN,I_TRIBALELF,I_LIZARDMAN,I_AMAZON},
 	 {I_LIZARDMAN,-1,-1},
@@ -4334,7 +4334,7 @@ static TerrainType td[] = {
 	{"swamp", "ceran_swamp2", 's', R_SWAMP,
 	 TerrainType::FLYINGMOUNTS,
 	 300,11,10,2,
-	 {{I_WOOD,100,10},{I_FLOATER,25,10},{I_HERBS,100,10},{I_MUSHROOM,10,5},
+	 {{I_WOOD,100,10},{I_FLOATER,25,10},{I_HERBS,100,10},{I_MUSHROOM,25,5},
 	  {-1,0,0},{-1,0,0},{-1,0,0}},
 	 {I_TRIBESMAN,I_TRIBALELF,I_LIZARDMAN,I_GOBLINMAN},
 	 {I_LIZARDMAN,-1,-1},
@@ -4343,7 +4343,7 @@ static TerrainType td[] = {
 	{"swamp", "ceran_swamp3", 's', R_SWAMP,
 	 TerrainType::FLYINGMOUNTS,
 	 200,11,10,2,
-	 {{I_WOOD,100,10},{I_FLOATER,25,10},{I_HERBS,100,10},{I_MUSHROOM,10,5},
+	 {{I_WOOD,100,10},{I_FLOATER,25,10},{I_HERBS,100,10},{I_MUSHROOM,25,5},
 	  {-1,0,0},{-1,0,0},{-1,0,0}},
 	 {I_TRIBESMAN,I_TRIBALELF,I_OGREMAN,I_GOBLINMAN},
 	 {I_VIKING,-1,-1},
@@ -4607,11 +4607,11 @@ TerrainType *TerrainDefs = td;
 
 static HealType hd[] = {
 	{0, 0},
-	{10, 50},
-	{10, 50}, // {15, 60},
-	{25, 75},
-	{25, 75}, // {60, 80},
-	{100, 90}
+	{5, 30},
+	{10, 40},
+	{15, 50},
+	{20, 60},
+	{25, 70}
 };
 HealType *HealDefs = hd;
 

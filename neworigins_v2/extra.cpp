@@ -1065,7 +1065,7 @@ void Game::ModifyTablesPerRuleset(void)
 	EnableItem(I_DROWMAN);
 	ModifyItemBasePrice(I_DROWMAN, 40);
 	ModifyRaceSkillLevels("DRLF", 5, 2);
-	ModifyRaceSkills("DRLF", 0, "LUMB");
+	ModifyRaceSkills("DRLF", 0, "HERB");
 	ModifyRaceSkills("DRLF", 1, "LBOW");
 	ModifyRaceSkills("DRLF", 2, "COMB");
 	ModifyRaceSkills("DRLF", 3, "WEAP");
