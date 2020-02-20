@@ -1236,7 +1236,7 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyTerrainCoastRace(R_CHASM, 0, I_UNDERDWARF);
 	ModifyTerrainCoastRace(R_CHASM, 1, I_DROWMAN);
 	ModifyTerrainCoastRace(R_CHASM, 2, I_GOBLINMAN);
-	ModifyTerrainEconomy(R_CHASM, 200, 0, 0, 3);
+	ModifyTerrainEconomy(R_CHASM, 0, 0, 0, 3);
 	// ModifyTerrainWMons(R_CHASM, 20, I_DEMON, I_BALROG, I_ETTIN);
 
 	// Modify the various spells which are allowed to cross levels
