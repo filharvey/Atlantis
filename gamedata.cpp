@@ -2939,19 +2939,19 @@ ArmorType armd[] = {
 	// ARMOR_IMITHRIL
 	{ "IMTH", 0, 100, {90, 90, 90, 90, 75, 75, 75, 75}},
 	// ARMOR_MARMOR
-	{ "MARM", 0, 300, {270, 270, 270, 270, 200, 200, 200, 200}}, // 90%/66.67%
+	{ "MARM", 0, 100, {90, 90, 90, 90, 67, 67, 67, 67}},
 	// ARMOR_MCHAIN
 	{ "MCAR", 0, 300, {225, 200, 150, 225, 150, 150, 150, 150}},
 	// ARMOR_PLATEARMOR
-	{ "PARM", 0, 300, {200, 200, 200, 200, 0, 0, 0, 0}},
+	{ "PARM", 0, 100, {67, 67, 67, 67, 33, 33, 33, 33}},
 	// ARMOR_BPLATE
 	{ "BPLA", 0, 300, {100, 270, 200, 75, 100, 100, 100, 100}},
 	// ARMOR_CHAINARMOR
-	{ "CARM", 0, 300, {100, 100, 100, 100, 0, 0, 0, 0}},
+	{ "CARM", 0, 100, {33, 33, 33, 33, 16, 16, 16, 16}},
 	// ARMOR_LEATHERARMOR
-	{ "LARM", 0, 100, {25, 25, 25, 25, 0, 0, 0, 0}},
+	{ "LARM", ArmorType::USEINASSASSINATE, 100, {25, 25, 25, 25, 5, 5, 5, 5}},
 	// ARMOR_CLOTHARMOR
-	{ "CLAR", ArmorType::USEINASSASSINATE, 6, {1, 1, 1, 1, 0, 0, 0, 0}},
+	{ "CLAR", ArmorType::USEINASSASSINATE, 100, {16, 16, 16, 16, 5, 5, 5, 5}},
 };
 
 ArmorType *ArmorDefs = armd;

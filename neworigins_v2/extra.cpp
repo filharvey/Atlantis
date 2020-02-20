@@ -978,6 +978,7 @@ void Game::ModifyTablesPerRuleset(void)
 	EnableItem(I_KRAKEN);
 	EnableItem(I_MERFOLK);
 	EnableItem(I_ELEMENTAL);
+	EnableItem(I_HYDRA);
 
 	//
 	// Change races
