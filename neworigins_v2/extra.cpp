@@ -997,6 +997,23 @@ void Game::ModifyTablesPerRuleset(void)
 	EnableItem(I_HYDRA);
 	EnableItem(O_BOG);
 
+	EnableItem(I_ICEDRAGON);
+	EnableItem(O_ICECAVE);
+
+	EnableItem(I_ILLYRTHID);
+	EnableItem(O_ILAIR);
+
+	EnableItem(I_STORMGIANT);
+	EnableItem(I_CLOUDGIANT);
+	EnableItem(O_GIANTCASTLE);
+
+	EnableItem(I_WARRIORS);
+	EnableItem(I_DARKMAGE);
+	EnableItem(O_DARKTOWER);
+
+	EnableItem(I_MAGICIANS);
+	EnableItem(O_MAGETOWER);
+
 	//
 	// Change races
 	//

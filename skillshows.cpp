@@ -1004,7 +1004,7 @@ AString *ShowSkill::Report(Faction *f)
 				"Phantasmal Entertainment grants the mage Entertainment "
 				"skill equal to ";
 			*str += Globals->ENTERTAIN_INCOME * 20;
-			*str += " times his Phantasmal Entertainment "
+			*str += " silver times his Phantasmal Entertainment "
 				"level and increases Entertainment limit in region. To use this "
 				"skill, the mage should CAST Phantasmal_Entertainment.";
 			break;
