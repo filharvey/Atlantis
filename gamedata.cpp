@@ -3577,7 +3577,7 @@ static ObjectType ot[] =
 	 {0,0,0,0,0,0}},
 	{"Cloudship",
 	 ObjectType::NEVERDECAY | ObjectType::CANENTER | ObjectType::CANMODIFY | ObjectType::DISABLED,
-	 100,1200,15,6,
+	 100,1200,15,5,
 	 -1,0,NULL,0,
 	 0,0,0,
 	 -1,-1,
