@@ -927,6 +927,16 @@ void Game::ModifyTablesPerRuleset(void)
 	EnableObject(O_MCITADEL);
 	EnableObject(O_STABLE);
 	EnableObject(O_MSTABLE);
+	EnableObject(O_HUT);
+	EnableObject(O_TRAPPINGLODGE);
+	EnableObject(O_FAERIERING);
+	EnableObject(O_ALCHEMISTLAB);
+	EnableObject(O_OASIS);
+	EnableObject(O_TRAPPINGHUT);
+	EnableObject(O_GEMAPPRAISER);
+	
+	DisableObject(O_PALACE);
+
 	ModifyObjectName(O_MFORTRESS, "Magical Fortress");
 	ModifyObjectName(O_MCASTLE, "Magical Castle");
 	ModifyObjectManpower(O_TOWER,
@@ -976,14 +986,10 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyItemMagicInput(I_FSWORD, 0, I_MSWORD, 1);
 	ModifyItemMagicInput(I_FSWORD, 1, I_SILVER, 600);
 
-	ModifyHealing(2, 15, 60);
-	ModifyHealing(4, 50, 80);
-
 	EnableObject(O_ISLE);
 	EnableObject(O_DERELICT);
 	EnableObject(O_OCAVE);
 	EnableObject(O_WHIRL);
-	DisableObject(O_PALACE);
 
 	//
 	// Monsters

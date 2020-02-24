@@ -39,6 +39,8 @@ void Soldier::SetupHealing()
 		}
 	}
 
+	// TODO: set healing potion as a self healing only
+
 	if (unit->items.GetNum(I_HEALPOTION)) {
 		healtype = 1;
 		unit->items.SetNum(I_HEALPOTION, unit->items.GetNum(I_HEALPOTION)-1);
