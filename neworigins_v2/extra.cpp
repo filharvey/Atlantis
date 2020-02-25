@@ -934,7 +934,7 @@ void Game::ModifyTablesPerRuleset(void)
 	EnableObject(O_OASIS);
 	EnableObject(O_TRAPPINGHUT);
 	EnableObject(O_GEMAPPRAISER);
-	
+
 	DisableObject(O_PALACE);
 
 	ModifyObjectName(O_MFORTRESS, "Magical Fortress");
@@ -975,8 +975,6 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyItemMagicInput(I_AMULETOFTS, 1, I_SILVER, 500);
 	ModifyItemMagicInput(I_AMULETOFP, 0, I_STONE, 1);
 	ModifyItemMagicInput(I_AMULETOFP, 1, I_SILVER, 200);
-	ModifyItemMagicInput(I_RUNESWORD, 0, I_MSWORD, 1);
-	ModifyItemMagicInput(I_RUNESWORD, 1, I_SILVER, 600);
 	ModifyItemMagicInput(I_SHIELDSTONE, 0, I_STONE, 1);
 	ModifyItemMagicInput(I_SHIELDSTONE, 1, I_SILVER, 200);
 	ModifyItemMagicInput(I_MCARPET, 0, I_FUR, 1);
