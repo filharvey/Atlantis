@@ -1039,15 +1039,14 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyItemBasePrice(I_LEADERS, 700);
 
 	EnableItem(I_MAN);
-	ModifyItemName(I_MAN, "human", "humans");
 	ModifyItemBasePrice(I_MAN, 40);
-	ModifyRaceSkillLevels("MAN", 4, 2);
-	ModifyRaceSkills("MAN", 0, "ARMO");
-	ModifyRaceSkills("MAN", 1, "RIDI");
-	ModifyRaceSkills("MAN", 2, "COMB");
-	ModifyRaceSkills("MAN", 3, "MINI");
-	ModifyRaceSkills("MAN", 4, "FARM");
-	ModifyRaceSkills("MAN", 5, "CARP");
+	ModifyRaceSkillLevels("HUMN", 4, 2);
+	ModifyRaceSkills("HUMN", 0, "ARMO");
+	ModifyRaceSkills("HUMN", 1, "RIDI");
+	ModifyRaceSkills("HUMN", 2, "COMB");
+	ModifyRaceSkills("HUMN", 3, "MINI");
+	ModifyRaceSkills("HUMN", 4, "FARM");
+	ModifyRaceSkills("HUMN", 5, "CARP");
 	
 	EnableItem(I_HILLDWARF);
 	ModifyItemBasePrice(I_HILLDWARF, 40);
@@ -1063,17 +1062,16 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyRaceSkillLevels("IDWA", 5, 2);
 	ModifyRaceSkills("IDWA", 0, "COMB");
 	ModifyRaceSkills("IDWA", 1, "WEAP");
-	ModifyRaceSkills("IDWA", 2, "MINI");
+	ModifyRaceSkills("IDWA", 2, "GCUT");
 	ModifyRaceSkills("IDWA", 3, "FARM");
 	ModifyRaceSkills("IDWA", 4, "ARMO");
-	ModifyRaceSkills("IDWA", 5, "GCUT");
 
 	EnableItem(I_UNDERDWARF);
 	ModifyItemBasePrice(I_UNDERDWARF, 40);
 	ModifyRaceSkillLevels("UDWA", 5, 2);
 	ModifyRaceSkills("UDWA", 0, "ARMO");
 	ModifyRaceSkills("UDWA", 1, "WEAP");
-	ModifyRaceSkills("UDWA", 2, "QUAR");
+	ModifyRaceSkills("UDWA", 2, "COMB");
 	ModifyRaceSkills("UDWA", 3, "MINI");
 	ModifyRaceSkills("UDWA", 4, "GCUT");
 	
@@ -1081,11 +1079,10 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyItemBasePrice(I_HIGHELF, 40);
 	ModifyRaceSkillLevels("HELF", 5, 2);
 	ModifyRaceSkills("HELF", 0, "HORS");
-	ModifyRaceSkills("HELF", 1, "COMB");
+	ModifyRaceSkills("HELF", 1, "FISH");
 	ModifyRaceSkills("HELF", 2, "LBOW");
 	ModifyRaceSkills("HELF", 3, "SHIP");
 	ModifyRaceSkills("HELF", 4, "SAIL");
-	ModifyRaceSkills("HELF", 5, "FISH");
 
 	EnableItem(I_WOODELF);
 	ModifyItemBasePrice(I_WOODELF, 40);
@@ -1093,9 +1090,8 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyRaceSkills("WELF", 0, "LUMB");
 	ModifyRaceSkills("WELF", 1, "LBOW");
 	ModifyRaceSkills("WELF", 2, "HERB");
-	ModifyRaceSkills("WELF", 3, "WEAP");
+	ModifyRaceSkills("WELF", 3, "CARP");
 	ModifyRaceSkills("WELF", 4, "FISH");
-	ModifyRaceSkills("WELF", 5, "CARP");
 
 	EnableItem(I_DROWMAN);
 	ModifyItemBasePrice(I_DROWMAN, 40);
@@ -1111,11 +1107,10 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyRaceSkillLevels("GNOM", 5, 2);
 	ModifyRaceSkills("GNOM", 0, "HERB");
 	ModifyRaceSkills("GNOM", 1, "QUAR");
-	ModifyRaceSkills("GNOM", 2, "BUIL");
+	ModifyRaceSkills("GNOM", 2, "ENTE");
 	ModifyRaceSkills("GNOM", 3, "XBOW");
 	ModifyRaceSkills("GNOM", 4, "GCUT");
-	ModifyRaceSkills("GNOM", 5, "ENTE");
-	ModifyItemCapacities(I_GNOME,9,0,0,0);
+	ModifyItemCapacities(I_GNOME,7,0,0,0);
 	ModifyItemWeight(I_GNOME, 5);
 
 	EnableItem(I_CENTAURMAN);
@@ -1146,7 +1141,7 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyRaceSkills("GBLN", 2, "SHIP");
 	ModifyRaceSkills("GBLN", 3, "WEAP");
 	ModifyRaceSkills("GBLN", 4, "ENTE");
-	ModifyItemCapacities(I_GOBLINMAN,9,0,0,0);
+	ModifyItemCapacities(I_GOBLINMAN,7,0,0,0);
 	ModifyItemWeight(I_GOBLINMAN, 5);
 
 	EnableItem(I_GNOLL);
@@ -1165,6 +1160,7 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyRaceSkills("ORC", 1, "LUMB");
 	ModifyRaceSkills("ORC", 2, "COMB");
 	ModifyRaceSkills("ORC", 3, "BUIL");
+	ModifyRaceSkills("ORC", 4, "SHIP");
 
 
 	//
@@ -1226,7 +1222,6 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyTerrainRace(R_DESERT, 0, I_GNOLL);
 	ModifyTerrainRace(R_DESERT, 1, I_GOBLINMAN);
 	ModifyTerrainRace(R_DESERT, 2, I_MAN);
-	ModifyTerrainRace(R_DESERT, 3, I_GNOME);
 	ModifyTerrainCoastRace(R_DESERT, 0, I_GNOLL);
 	ModifyTerrainCoastRace(R_DESERT, 1, I_GOBLINMAN);
 	ModifyTerrainCoastRace(R_DESERT, 2, I_MAN);
@@ -1244,9 +1239,9 @@ void Game::ModifyTablesPerRuleset(void)
 	// Underworld
 
 	ClearTerrainRaces(R_CAVERN);
-	ModifyTerrainRace(R_CAVERN, 0, I_MAN);
+	ModifyTerrainRace(R_CAVERN, 0, I_DROWMAN);
 	ModifyTerrainRace(R_CAVERN, 1, I_UNDERDWARF);
-	ModifyTerrainRace(R_CAVERN, 2, I_DROWMAN);
+	ModifyTerrainRace(R_CAVERN, 2, I_MAN);
 	ModifyTerrainRace(R_CAVERN, 3, I_GNOME);
 	ModifyTerrainCoastRace(R_CAVERN, 0, I_MAN);
 	ModifyTerrainCoastRace(R_CAVERN, 1, I_UNDERDWARF);
@@ -1254,13 +1249,13 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyTerrainEconomy(R_CAVERN, 300, 12, 10, 1);
 
 	ClearTerrainRaces(R_UFOREST);
-	ModifyTerrainRace(R_UFOREST, 0, I_UNDERDWARF);
-	ModifyTerrainRace(R_UFOREST, 1, I_DROWMAN);
-	ModifyTerrainRace(R_UFOREST, 2, I_GNOME);
+	ModifyTerrainRace(R_UFOREST, 0, I_DROWMAN);
+	ModifyTerrainRace(R_UFOREST, 1, I_UNDERDWARF);
+	ModifyTerrainRace(R_UFOREST, 2, I_GOBLINMAN);
 	ModifyTerrainRace(R_UFOREST, 3, I_MAN);
-	ModifyTerrainCoastRace(R_UFOREST, 0, I_UNDERDWARF);
-	ModifyTerrainCoastRace(R_UFOREST, 1, I_DROWMAN);
-	ModifyTerrainCoastRace(R_UFOREST, 2, I_GNOME);
+	ModifyTerrainCoastRace(R_UFOREST, 0, I_DROWMAN);
+	ModifyTerrainCoastRace(R_UFOREST, 1, I_UNDERDWARF);
+	ModifyTerrainCoastRace(R_UFOREST, 2, I_GOBLINMAN);
 	ModifyTerrainEconomy(R_UFOREST, 500, 12, 10, 2);
 
 	ClearTerrainRaces(R_CHASM);
