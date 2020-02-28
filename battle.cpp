@@ -289,13 +289,11 @@ int Battle::Run( ARegion * region,
 				tactics_bonus = armies[0]->tac - armies[1]->tac;
 				if (tactics_bonus > 3) tactics_bonus = 3;
 				armies[0]->tactics_bonus = tactics_bonus;
-				AddLine(AString("Army 0 bonus ") + tactics_bonus);
 			}
 			if (armies[1]->tac > armies[0]->tac) {
 				tactics_bonus = armies[1]->tac - armies[0]->tac;
 				if (tactics_bonus > 3) tactics_bonus = 3;
 				armies[1]->tactics_bonus = tactics_bonus;
-				AddLine(AString("Army 1 bonus ") + tactics_bonus);
 			}
 		} else {
 			if (armies[0]->tac > armies[1]->tac) FreeRound(armies[0],armies[1]);
