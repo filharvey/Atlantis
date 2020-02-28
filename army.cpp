@@ -1203,8 +1203,8 @@ int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attack
 		if (tar->riding != -1) attackLevel += mountBonus;
 
 		// TODO: debug only, remove later
-		b->AddLine(attacker->name + AString(" attack level: ") + attackLevel + "(+" + attackers->tactics_bonus + ").");
-		b->AddLine(tar->name + AString(" defence level: ") + tlev + "(+" + tactics_bonus + ").");
+		// b->AddLine(attacker->name + AString(" attack level: ") + attackLevel + "(+" + attackers->tactics_bonus + ").");
+		// b->AddLine(tar->name + AString(" defence level: ") + tlev + "(+" + tactics_bonus + ").");
 
 		/* 5. Attack soldier */
 		if (attackType != NUM_ATTACK_TYPES) {
