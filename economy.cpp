@@ -815,11 +815,6 @@ void ARegion::AddTown(int size)
  * in the last instance. */
 void ARegion::AddTown(int size, AString * name)
 {
-	// Do not create town in region without any tax
-	// if (wealth == 0) {
-	// 	return;
-	// }
-
 	town = new TownInfo;
 	town->name = name;
 	SetTownType(size);
