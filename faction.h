@@ -125,6 +125,11 @@ public:
 	Faction(int);
 	~Faction();
 	
+#if EXPORT_JSON
+	void FactionTypeStrJSON(AreportJSON *f);
+	void WriteReportJSON(AreportJSON *f, Game *pGame);
+#endif
+
 	void Readin( Ainfile *, ATL_VER version );
 	void Writeout( Aoutfile * );
 	void View();

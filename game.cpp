@@ -23,14 +23,24 @@
 //
 // END A3HEADER
 
+#if EXPORT_JSON
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+
+using namespace rapidjson;
+#endif
+
 #ifdef WIN32
 #include <memory.h>	// Needed for memcpy on windows
 #include "io.h"		// Needed for access() on windows
 #define F_OK	0
+#define access _access
+#else
+#include <unistd.h>
 #endif
 
 #include <string.h>
-#include <unistd.h>
 
 #include "game.h"
 #include "unit.h"
@@ -1184,6 +1194,12 @@ void Game::WriteReport()
 			(fac->num == 1))) {
 			int i = f.OpenByName(str);
 			if (i != -1) {
+#if EXPORT_JSON
+				AreportJSON json;
+				json.OpenByName(str + ".json");
+				fac->WriteReportJSON(&json, this);
+				json.Close();
+#endif
 				fac->WriteReport(&f, this);
 				f.Close();
 			}
@@ -1851,7 +1867,7 @@ void Game::CreateCityMon(ARegion *pReg, int percent, int needmage)
 	num = num * percent / 100;
 	Faction *pFac = GetFaction(&factions, guardfaction);
 	Unit *u = GetNewUnit(pFac);
-	Unit *u2;
+	Unit *u2 = NULL;
 	AString *s = new AString("City Guard");
 	
 	/*

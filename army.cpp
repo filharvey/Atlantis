@@ -26,6 +26,15 @@
 #include "gameio.h"
 #include "gamedata.h"
 
+#ifdef WIN32
+#ifndef max
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#endif
+#ifndef min
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+#endif
+#endif // WIN32
+
 enum {
 	WIN_NO_DEAD,
 	WIN_DEAD,

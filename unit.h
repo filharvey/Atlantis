@@ -123,6 +123,16 @@ class Unit : public AListElem
 		Unit(int,Faction *,int = 0);
 		~Unit();
 
+#if EXPORT_JSON
+		void SpoilsReportJSON(AreportJSON *f);
+		void WriteReportJSON(AreportJSON *, int, int, int, int, int, int);
+		void GetNameJSON(Writer<StringBuffer> *, int);
+		void MageReportJSON(AreportJSON *f);
+		void ReadyItemJSON(AreportJSON *f);
+		void StudyableSkillsJSON(AreportJSON *f);
+		void BattleReportJSON(Writer<StringBuffer> *, int);
+#endif
+
 		void SetMonFlags();
 		void MakeWMon(char const *,int,int);
 

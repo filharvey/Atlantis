@@ -1288,11 +1288,6 @@ void ARegion::WriteExits(Areport *f, ARegionList *pRegs, int *exits_seen)
 	f->EndLine();
 }
 
-#define AC_STRING "%s Nexus is a magical place: the entryway " \
-"to the world of %s. Enjoy your stay; the city guards should " \
-"keep you safe as long as you should choose to stay. However, rumor " \
-"has it that once you have left the Nexus, you can never return."
-
 void ARegion::WriteReport(Areport *f, Faction *fac, int month,
 		ARegionList *pRegions)
 {
