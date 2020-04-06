@@ -695,6 +695,7 @@ void Army::GetMonSpoils(ItemList *spoils,int monitem, int free)
 		if ((ItemDefs[i].type & thespoil) &&
 				!(ItemDefs[i].type & IT_SPECIAL) &&
 				!(ItemDefs[i].type & IT_SHIP) &&
+				!(ItemDefs[i].type & IT_NEVER_SPOIL) &&
 				(ItemDefs[i].baseprice <= mp->silver) &&
 				!(ItemDefs[i].flags & ItemType::DISABLED)) {
 			count ++;
@@ -707,6 +708,7 @@ void Army::GetMonSpoils(ItemList *spoils,int monitem, int free)
 		if ((ItemDefs[i].type & thespoil) &&
 				!(ItemDefs[i].type & IT_SPECIAL) &&
 				!(ItemDefs[i].type & IT_SHIP) &&
+				!(ItemDefs[i].type & IT_NEVER_SPOIL) &&
 				(ItemDefs[i].baseprice <= mp->silver) &&
 				!(ItemDefs[i].flags & ItemType::DISABLED)) {
 			count--;
