@@ -118,6 +118,12 @@ public:
 	// Functions to allow enabling/disabling parts of the data tables
 	void ModifyTablesPerRuleset(void);
 
+#if EXPORT_JSON
+	int SimulateBattle(char inputJsonFilename[]);
+	int ExportGameData();
+	AList *GetUnitsFromJsonArray(rapidjson::Value& jsonArray, Faction *faction);
+#endif
+
 private:
 	//
 	// Game editing functions.

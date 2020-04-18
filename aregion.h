@@ -469,6 +469,10 @@ class ARegionList : public AList
 		int numLevels;
 		ARegionArray **pRegionArrays;
 
+#if EXPORT_JSON
+		void CreateBattlegroundWorld();
+#endif
+
 	public:
 		//
 		// Public world creation stuff
