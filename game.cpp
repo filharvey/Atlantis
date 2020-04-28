@@ -2158,6 +2158,7 @@ AList *Game::GetUnitsFromJsonArray(rapidjson::Value& jsonArray, Faction *fact)
 		if (jsonUnit.HasMember("skills") && jsonUnit["skills"].IsArray()) {
 			for (rapidjson::Value::ConstValueIterator itr2 = jsonUnit["skills"].Begin(); itr2 != jsonUnit["skills"].End(); ++itr2) {
 				const rapidjson::Value& itemObject = *itr2;
+
 				skillNum = LookupSkill(new AString(itemObject["abbr"].GetString()));
 
 				if (skillNum == -1) {
