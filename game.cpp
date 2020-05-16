@@ -2321,8 +2321,6 @@ int Game::SimulateBattle(char inputJsonFilename[])
 		return 0;
 	}
 
-	seedrandomrandom();
-
 	ARegionList regions;
 	regions.CreateBattlegroundWorld();
 

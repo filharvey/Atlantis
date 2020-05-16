@@ -172,6 +172,8 @@ int main(int argc, char *argv[])
 
 			int wins = 0;
 
+			seedrandomrandom();
+
 			for (int a = 0; a < rounds; a++)
 			{
 				int result = game.SimulateBattle(argv[2]);
@@ -183,12 +185,7 @@ int main(int argc, char *argv[])
 			float ratio = (wins / (float)rounds) * 100;
 
 			cout << "Battles " << rounds << " wins " << wins << " ratio: " << ratio << "%" << endl;
-
-/*			if (!game.SimulateBattle(argv[2])) {
-				Awrite("Unable to generate battle report!");
-				break;
-			}
-*/		}
+		}
 		else if (AString(argv[1]) == "exportdata") {
 
 			if (!game.ExportGameData()) {
