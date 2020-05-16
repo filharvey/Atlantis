@@ -2366,12 +2366,28 @@ int Game::SimulateBattle(char inputJsonFilename[])
 
 	Battle * battleSimulation = new Battle;
 	battleSimulation->WriteSides(customRegion, attacker, defender, &atts, &defs, 0, &regions);
+
+#if EXPORT_JSON
+	battleSimulation->jsonWriter = new Writer<StringBuffer>(battleSimulation->s);
+	battleSimulation->jsonWriter->StartObject();
+	battleSimulation->WriteSidesJSON(customRegion, attacker, defender, &atts, &defs, 0, &regions);
+#endif
+
 	int result = battleSimulation->Run(customRegion, attacker, &atts, defender, &defs, 0, &regions);
+
+#if EXPORT_JSON
+	battleSimulation->jsonWriter->EndObject();
+#endif
 
 	forlist_reuse(&battleSimulation->text) {
 		AString * s = (AString *)elem;
 		cout << *s << endl;
 	}
+
+	cout << endl << endl;
+	Document d;
+	d.Parse(battleSimulation->s.GetString());
+	cout << battleSimulation->s.GetString () << endl;
 
 	fclose(jsonFilePointer);
 	delete attackerFaction;

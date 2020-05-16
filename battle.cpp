@@ -29,6 +29,14 @@
 #include "gamedata.h"
 #include "quests.h"
 
+#if EXPORT_JSON
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+
+using namespace rapidjson;
+#endif
+
 Battle::Battle()
 {
 	asstext = 0;
@@ -44,20 +52,30 @@ Battle::~Battle()
 
 void Battle::FreeRound(Army * att,Army * def, int ass)
 {
+#if EXPORT_JSON
+	jsonWriter->Key("freeRound");
+	jsonWriter->StartObject();
+#endif
+
 	/* Write header */
 	AddLine(*(att->leader->name) + " gets a free round of attacks.");
 
 	/* Update both army's shields */
 	att->shields.DeleteAll();
-	UpdateShields(att);
+	UpdateShields(att, true);
 
 	def->shields.DeleteAll();
-	UpdateShields(def);
+	UpdateShields(def, false);
 
 	//
 	// Update the attacking armies round counter
 	//
 	att->round++;
+
+#if EXPORT_JSON
+	jsonWriter->Key("attacks");
+	jsonWriter->StartArray();
+#endif
 
 	/* Run attacks until done */
 	int alv = def->NumAlive();
@@ -68,12 +86,27 @@ void Battle::FreeRound(Army * att,Army * def, int ass)
 		DoAttack(att->round, a, att, def, behind, ass);
 	}
 
+#if EXPORT_JSON
+	jsonWriter->EndArray();
+
+	jsonWriter->Key("Health");
+	jsonWriter->StartArray();
+#endif
+
 	/* Write losses */
 	def->Regenerate(this);
 	alv -= def->NumAlive();
 	AddLine(*(def->leader->name) + " loses " + alv + ".");
 	AddLine("");
 	att->Reset();
+
+#if EXPORT_JSON
+	jsonWriter->EndArray();
+
+	jsonWriter->Key("loses");
+	jsonWriter->Int(alv);
+	jsonWriter->EndObject();
+#endif
 }
 
 void Battle::DoAttack(int round, Soldier *a, Army *attackers, Army *def,
@@ -103,11 +136,32 @@ void Battle::DoAttack(int round, Soldier *a, Army *attackers, Army *def,
 				}
 			}
 			if (tot != -1) {
+#if EXPORT_JSON
+				jsonWriter->StartObject();
+
+				jsonWriter->Key("name");
+				jsonWriter->String(a->name.Str());
+
+				jsonWriter->Key("description");
+				jsonWriter->String(spd->spelldesc);
+
+				jsonWriter->Key("description2");
+				jsonWriter->String(spd->spelldesc2);
+
+				jsonWriter->Key("total");
+				jsonWriter->Int(tot);
+
+				jsonWriter->Key("target");
+				jsonWriter->String(spd->spelltarget);
+
+				jsonWriter->EndObject();
+#endif
 				AddLine(a->name + " " + spd->spelldesc + ", " +
 						spd->spelldesc2 + tot + spd->spelltarget + ".");
 			}
 		}
 	}
+
 	if (!def->NumAlive()) return;
 
 	int numAttacks = a->attacks;
@@ -152,19 +206,45 @@ void Battle::DoAttack(int round, Soldier *a, Army *attackers, Army *def,
 
 void Battle::NormalRound(int round,Army * a,Army * b)
 {
+#if EXPORT_JSON
+	jsonWriter->StartObject();
+	jsonWriter->Key("round");
+	jsonWriter->Int(round);
+#endif
+
 	/* Write round header */
 	AddLine(AString("Round ") + round + ":");
 
 	if (a->tactics_bonus > b->tactics_bonus) {
+#if EXPORT_JSON
+		jsonWriter->Key("tacticBonus");
+		jsonWriter->StartObject();
+		jsonWriter->Key("name");
+		jsonWriter->String((*(a->leader->name)).Str());
+		jsonWriter->Key("bonus");
+		jsonWriter->Int(a->tactics_bonus);
+		jsonWriter->EndObject();
+#endif
+
 		AddLine(*(a->leader->name) + " tactics bonus " + a->tactics_bonus + ".");	
 	}
 	if (b->tactics_bonus > a->tactics_bonus) {
+#if EXPORT_JSON
+		jsonWriter->Key("tacticBonus");
+		jsonWriter->StartObject();
+		jsonWriter->Key("name");
+		jsonWriter->String((*(b->leader->name)).Str());
+		jsonWriter->Key("bonus");
+		jsonWriter->Int(b->tactics_bonus);
+		jsonWriter->EndObject();
+#endif
+
 		AddLine(*(b->leader->name) + " tactics bonus " + b->tactics_bonus + ".");	
 	}
 
 	/* Update both army's shields */
-	UpdateShields(a);
-	UpdateShields(b);
+	UpdateShields(a, true);
+	UpdateShields(b, false);
 
 	/* Initialize variables */
 	a->round++;
@@ -177,6 +257,11 @@ void Battle::NormalRound(int round,Army * a,Army * b)
 	int batt = b->CanAttack();
 
 	/* Run attacks until done */
+#if EXPORT_JSON
+	jsonWriter->Key("attacks");
+	jsonWriter->StartArray();
+#endif
+
 	while (aalive && balive && (aatt || batt))
 	{
 		int num = getrandom(aatt + batt);
@@ -199,14 +284,51 @@ void Battle::NormalRound(int round,Army * a,Army * b)
 		batt = b->CanAttack();
 	}
 
+#if EXPORT_JSON
+	jsonWriter->EndArray();
+
+	jsonWriter->Key("Health");
+	jsonWriter->StartArray();
+#endif
+
 	/* Finish round */
 	a->Regenerate(this);
 	b->Regenerate(this);
+
+#if EXPORT_JSON
+	jsonWriter->EndArray();
+#endif
+
 	aialive -= aalive;
 	AddLine(*(a->leader->name) + " loses " + aialive + ".");
 	bialive -= balive;
 	AddLine(*(b->leader->name) + " loses " + bialive + ".");
 	AddLine("");
+
+#if EXPORT_JSON
+	jsonWriter->Key("loses");
+	jsonWriter->StartArray();
+
+	// army A
+	jsonWriter->StartObject();
+	jsonWriter->Key("name");
+	jsonWriter->String((*(a->leader->name)).Str());
+	jsonWriter->Key("number");
+	jsonWriter->Int(aialive);
+	jsonWriter->EndObject();
+
+	// army B
+	jsonWriter->StartObject();
+	jsonWriter->Key("name");
+	jsonWriter->String((*(b->leader->name)).Str());
+	jsonWriter->Key("number");
+	jsonWriter->Int(bialive);
+	jsonWriter->EndObject();
+
+	jsonWriter->EndArray();
+	jsonWriter->EndObject();
+#endif
+
 	a->Reset();
 	b->Reset();
 }
@@ -301,21 +423,50 @@ int Battle::Run( ARegion * region,
 		}
 	}
 
+#if EXPORT_JSON
+	jsonWriter->Key("rounds");
+	jsonWriter->StartArray();
+#endif
+
 	int round = 1;
 	while (!armies[0]->Broken() && !armies[1]->Broken() && round < 101) {
 		NormalRound(round++,armies[0],armies[1]);
 	}
 
+#if EXPORT_JSON
+	jsonWriter->EndArray();
+#endif
+
 	if ((armies[0]->Broken() && !armies[1]->Broken()) ||
 		(!armies[0]->NumAlive() && armies[1]->NumAlive())) {
 		if (ass) assassination = ASS_FAIL;
 
+#if EXPORT_JSON
+		jsonWriter->Key("result");
+		jsonWriter->StartObject();
+#endif
+
 		if (armies[0]->NumAlive()) {
+#if EXPORT_JSON
+			jsonWriter->Key("routed");
+			jsonWriter->String((*(armies[0]->leader->name)).Str());
+#endif
+
 			AddLine(*(armies[0]->leader->name) + " is routed!");
 			FreeRound(armies[1],armies[0]);
 		} else {
+#if EXPORT_JSON
+			jsonWriter->Key("destroyed");
+			jsonWriter->String((*(armies[0]->leader->name)).Str());
+#endif
+
 			AddLine(*(armies[0]->leader->name) + " is destroyed!");
 		}
+
+#if EXPORT_JSON
+		jsonWriter->Key("casualties");
+		jsonWriter->StartObject();
+#endif
 		AddLine("Total Casualties:");
 		ItemList *spoils = new ItemList;
 		armies[0]->Lose(this, spoils);
@@ -325,10 +476,21 @@ int Battle::Run( ARegion * region,
 		} else {
 			temp = "Spoils: none.";
 		}
+#if EXPORT_JSON
+		jsonWriter->EndObject();
+		jsonWriter->Key("spoils");
+		spoils->ReportJSON(jsonWriter, 2, 0, 1);
+#endif
+
 		armies[1]->Win(this, spoils);
 		AddLine("");
 		AddLine(temp);
 		AddLine("");
+
+#if EXPORT_JSON
+		jsonWriter->EndObject();
+#endif
+
 		delete spoils;
 		delete armies[0];
 		delete armies[1];
@@ -337,7 +499,22 @@ int Battle::Run( ARegion * region,
 
 	if ((armies[1]->Broken() && !armies[0]->Broken()) ||
 		(!armies[1]->NumAlive() && armies[0]->NumAlive())) {
+#if EXPORT_JSON
+		jsonWriter->Key("result");
+		jsonWriter->StartObject();
+#endif
+
 		if (ass) {
+#if EXPORT_JSON
+			jsonWriter->Key("assassinated");
+			jsonWriter->StartObject();
+			jsonWriter->Key("name");
+			jsonWriter->String((*(armies[1]->leader->name)).Str());
+			jsonWriter->Key("region");
+			jsonWriter->String(region->ShortPrint(pRegs).Str());
+			jsonWriter->EndObject();
+#endif
+
 			assassination = ASS_SUCC;
 			asstext = new AString(*(armies[1]->leader->name) +
 						" is assassinated in " +
@@ -345,11 +522,26 @@ int Battle::Run( ARegion * region,
 						"!");
 		}
 		if (armies[1]->NumAlive()) {
+#if EXPORT_JSON
+			jsonWriter->Key("routed");
+			jsonWriter->String((*(armies[1]->leader->name)).Str());
+#endif
+
 			AddLine(*(armies[1]->leader->name) + " is routed!");
 			FreeRound(armies[0],armies[1]);
 		} else {
+#if EXPORT_JSON
+			jsonWriter->Key("destroyed");
+			jsonWriter->String((*(armies[1]->leader->name)).Str());
+#endif
+
 			AddLine(*(armies[1]->leader->name) + " is destroyed!");
 		}
+
+#if EXPORT_JSON
+		jsonWriter->Key("casualties");
+		jsonWriter->StartObject();
+#endif
 		AddLine("Total Casualties:");
 		ItemList *spoils = new ItemList;
 		armies[1]->Lose(this, spoils);
@@ -359,7 +551,19 @@ int Battle::Run( ARegion * region,
 		} else {
 			temp = "Spoils: none.";
 		}
+
+#if EXPORT_JSON
+		jsonWriter->EndObject();
+		jsonWriter->Key("spoils");
+		spoils->ReportJSON(jsonWriter, 2, 0, 1);
+#endif
+
 		armies[0]->Win(this, spoils);
+
+#if EXPORT_JSON
+		jsonWriter->EndObject();
+#endif
+
 		AddLine("");
 		AddLine(temp);
 		AddLine("");
@@ -369,11 +573,30 @@ int Battle::Run( ARegion * region,
 		return BATTLE_WON;
 	}
 
+#if EXPORT_JSON
+	jsonWriter->Key("result");
+	jsonWriter->StartObject();
+	jsonWriter->Key("draw");
+	jsonWriter->Bool(true);
+#endif
+
 	AddLine("The battle ends indecisively.");
 	AddLine("");
 	AddLine("Total Casualties:");
+
+#if EXPORT_JSON
+	jsonWriter->Key("casualties");
+	jsonWriter->StartArray();
+#endif
+
 	armies[0]->Tie(this);
 	armies[1]->Tie(this);
+
+#if EXPORT_JSON
+	jsonWriter->EndArray();
+	jsonWriter->EndObject();
+#endif
+
 	temp = "Spoils: none.";
 	AddLine("");
 	AddLine(temp);
@@ -430,6 +653,77 @@ void Battle::WriteSides(ARegion * r,
 	}
 	AddLine("");
 }
+
+#if EXPORT_JSON
+void Battle::WriteSidesJSON(ARegion * r,
+	Unit * att,
+	Unit * tar,
+	AList * atts,
+	AList * defs,
+	int ass,
+	ARegionList *pRegs)
+{
+	if (ass) {
+		AString name = *tar->name;
+		jsonWriter->Key("Assassinate");
+		jsonWriter->StartObject();
+		jsonWriter->Key("target");
+		jsonWriter->String(name.Str());
+		r->ShortPrintJSON(jsonWriter, pRegs);
+
+		jsonWriter->EndObject();
+
+		//		AddLine(*att->name + " attempts to assassinate " + *tar->name
+		//			+ " in " + r->ShortPrint(pRegs) + "!");
+	}
+	else {
+		AString name = *tar->name;
+		jsonWriter->Key("Attack");
+		jsonWriter->StartObject();
+		jsonWriter->Key("target");
+		jsonWriter->String(name.Str());
+		r->ShortPrintJSON(jsonWriter, pRegs);
+
+		jsonWriter->EndObject();
+		//		AddLine(*att->name + " attacks " + *tar->name + " in " +
+		//			r->ShortPrint(pRegs) + "!");
+	}
+	//	AddLine("");
+
+	int dobs = 0;
+	int aobs = 0;
+	{
+		forlist(defs) {
+			int a = ((Location *)elem)->unit->GetAttribute("observation");
+			if (a > dobs) dobs = a;
+		}
+	}
+
+	//	AddLine("Attackers:");
+	jsonWriter->Key("Attackers");
+	jsonWriter->StartArray();
+	{
+		forlist(atts) {
+			int a = ((Location *)elem)->unit->GetAttribute("observation");
+			if (a > aobs) aobs = a;
+			((Location *)elem)->unit->BattleReportJSON(jsonWriter, dobs);
+		}
+	}
+	jsonWriter->EndArray();
+
+	//	AddLine("");
+	//	AddLine("Defenders:");
+	jsonWriter->Key("Defenders");
+	jsonWriter->StartArray();
+	{
+		forlist(defs) {
+			((Location *)elem)->unit->BattleReportJSON(jsonWriter, aobs);
+		}
+	}
+	jsonWriter->EndArray();
+	//	AddLine("");
+}
+#endif
 
 void Battle::Report(Areport * f,Faction * fac) {
 	if (assassination == ASS_SUCC && fac != attacker) {
@@ -820,6 +1114,12 @@ int Game::RunBattle(ARegion * r,Unit * attacker,Unit * target,int ass,
 	Battle * b = new Battle;
 	b->WriteSides(r,attacker,target,&atts,&defs,ass, &regions );
 
+#if EXPORT_JSON
+	b->jsonWriter = new Writer<StringBuffer>(b->s);
+	b->jsonWriter->StartObject();
+	b->WriteSidesJSON(r, attacker, target, &atts, &defs, ass, &regions);
+#endif
+
 	battles.Add(b);
 	{
 		forlist(&factions) {
@@ -849,10 +1149,34 @@ int Game::RunBattle(ARegion * r,Unit * attacker,Unit * target,int ass,
 	if (uncontrolled > 0 && monfaction > 0) {
 		int undead = getrandom(uncontrolled * 2 / 3 + 1);
 		int skel = uncontrolled - undead;
+
+#if EXPORT_JSON
+		b->jsonWriter->Key("rise");
+		b->jsonWriter->StartArray();
+
+		b->jsonWriter->StartObject();
+		b->jsonWriter->Key("type");
+		b->jsonWriter->String(ItemDefs[I_SKELETON].names);
+		b->jsonWriter->Key("num");
+		b->jsonWriter->Int(skel);
+
+		b->jsonWriter->EndObject();
+#endif
+
 		AString tmp = ItemString(I_SKELETON, skel);
 		if (undead > 0) {
 			tmp += " and ";
 			tmp += ItemString(I_UNDEAD, undead);
+
+#if EXPORT_JSON
+			b->jsonWriter->StartObject();
+			b->jsonWriter->Key("type");
+			b->jsonWriter->String(ItemDefs[I_UNDEAD].names);
+			b->jsonWriter->Key("num");
+			b->jsonWriter->Int(undead);
+
+			b->jsonWriter->EndObject();
+#endif
 		}
 		tmp += " rise";
 		if ((skel + undead) == 1)
@@ -865,6 +1189,13 @@ int Game::RunBattle(ARegion * r,Unit * attacker,Unit * target,int ass,
 		u->MoveUnit(r->GetDummy());
 		b->AddLine(tmp);
 		b->AddLine("");
+#if EXPORT_JSON
+		b->jsonWriter->EndArray();
+#endif
 	}
+
+#if EXPORT_JSON
+	b->jsonWriter->EndObject();
+#endif
 	return result;
 }

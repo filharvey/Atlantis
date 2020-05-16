@@ -525,20 +525,19 @@ void mergeObjects(Writer<StringBuffer> *f, rapidjson::Value &srcObject)
 }
 
 void Battle::ReportJSON(AreportJSON * f, Faction * fac) {
-	if (assassination == ASS_SUCC && fac != attacker) {
-			f->String(*asstext);
-	//		f->PutStr(*asstext);
-	//		f->PutStr("");
-			return;
-		}
-		forlist(&text) {
-			AString * s = (AString *)elem;
-			f->String(*s);
-	//		f->PutStr(*s);
-		}
+/*	if (assassination == ASS_SUCC && fac != attacker) {
+		f->String(*asstext);
+//		f->PutStr(*asstext);
+//		f->PutStr("");
+		return;
+	}
+	forlist(&text) {
+		AString * s = (AString *)elem;
+		f->String(*s);
+//		f->PutStr(*s);
+	}
+*/
 
-
-/*
 	f->StartObject();
 
 	Document d;
@@ -548,7 +547,6 @@ void Battle::ReportJSON(AreportJSON * f, Faction * fac) {
 	delete jsonWriter;
 
 	f->EndObject();
-*/
 }
 
 void ARegion::WagesForReportJSON(AreportJSON *f)

@@ -73,7 +73,7 @@ class Battle : public AListElem
 		//
 		// These functions should be implemented in specials.cpp
 		//
-		void UpdateShields(Army *);
+		void UpdateShields(Army *, bool attacker);
 		void DoSpecialAttack( int round, Soldier *a, Army *attackers,
 				Army *def, int behind );
 
