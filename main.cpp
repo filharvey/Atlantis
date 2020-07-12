@@ -171,6 +171,7 @@ int main(int argc, char *argv[])
 			}
 
 			int wins = 0;
+			int loses = 0;
 
 			seedrandomrandom();
 
@@ -178,13 +179,15 @@ int main(int argc, char *argv[])
 			{
 				int result = game.SimulateBattle(argv[2]);
 
-				if (result == BATTLE_WON)
+				if (result == BATTLE_WON) 
 					wins++;
+				else if (result == BATTLE_LOST)
+					loses++;
 			}
 
 			float ratio = (wins / (float)rounds) * 100;
 
-			cout << "Battles " << rounds << " wins " << wins << " ratio: " << ratio << "%" << endl;
+			cout << "Battles " << rounds << " wins " << wins << " loses " << loses << " ratio: " << ratio << "%" << endl;
 		}
 		else if (AString(argv[1]) == "exportdata") {
 

@@ -2364,37 +2364,94 @@ int Game::SimulateBattle(char inputJsonFilename[])
 		defender = u;
 	}
 
-	Battle * battleSimulation = new Battle;
-	battleSimulation->WriteSides(customRegion, attacker, defender, &atts, &defs, 0, &regions);
+	Battle * b = new Battle;
+	b->WriteSides(customRegion, attacker, defender, &atts, &defs, 0, &regions);
 
 #if EXPORT_JSON
-	battleSimulation->jsonWriter = new Writer<StringBuffer>(battleSimulation->s);
-	battleSimulation->jsonWriter->StartObject();
-	battleSimulation->WriteSidesJSON(customRegion, attacker, defender, &atts, &defs, 0, &regions);
+	b->jsonWriter = new Writer<StringBuffer>(b->s);
+	b->jsonWriter->StartObject();
+	b->WriteSidesJSON(customRegion, attacker, defender, &atts, &defs, 0, &regions);
 #endif
 
-	int result = battleSimulation->Run(customRegion, attacker, &atts, defender, &defs, 0, &regions);
+	int result = b->Run(customRegion, attacker, &atts, defender, &defs, 0, &regions);
+
+	/*
+	int uncontrolled = 0;
+	{
+		forlist(&atts) {
+			uncontrolled += KillDead((Location*)elem, b);
+		}
+	}
+	{
+		forlist(&defs) {
+			uncontrolled += KillDead((Location*)elem, b);
+		}
+	}
+
+	if (uncontrolled > 0 && monfaction > 0) {
+		int undead = getrandom(uncontrolled * 2 / 3 + 1);
+		int skel = uncontrolled - undead;
 
 #if EXPORT_JSON
-	battleSimulation->jsonWriter->EndObject();
+		b->jsonWriter->Key("rise");
+		b->jsonWriter->StartArray();
+
+		b->jsonWriter->StartObject();
+		b->jsonWriter->Key("type");
+		b->jsonWriter->String(ItemDefs[I_SKELETON].names);
+		b->jsonWriter->Key("num");
+		b->jsonWriter->Int(skel);
+
+		b->jsonWriter->EndObject();
 #endif
 
-	forlist_reuse(&battleSimulation->text) {
+		AString tmp = ItemString(I_SKELETON, skel);
+		if (undead > 0) {
+			tmp += " and ";
+			tmp += ItemString(I_UNDEAD, undead);
+
+#if EXPORT_JSON
+			b->jsonWriter->StartObject();
+			b->jsonWriter->Key("type");
+			b->jsonWriter->String(ItemDefs[I_UNDEAD].names);
+			b->jsonWriter->Key("num");
+			b->jsonWriter->Int(undead);
+
+			b->jsonWriter->EndObject();
+#endif
+		}
+		tmp += " rise";
+		if ((skel + undead) == 1)
+			tmp += "s";
+		tmp += " from the grave to seek vengeance.";
+
+		b->AddLine(tmp);
+		b->AddLine("");
+#if EXPORT_JSON
+		b->jsonWriter->EndArray();
+#endif
+	}
+	*/
+#if EXPORT_JSON
+	b->jsonWriter->EndObject();
+#endif
+
+	forlist_reuse(&b->text) {
 		AString * s = (AString *)elem;
 		cout << *s << endl;
 	}
 
-	cout << endl << endl;
+/*	cout << endl << endl;
 	Document d;
 	d.Parse(battleSimulation->s.GetString());
 	cout << battleSimulation->s.GetString () << endl;
-
+	*/
 	fclose(jsonFilePointer);
 	delete attackerFaction;
 	delete defenderFaction;
 	delete attackerUnits;
 	delete defenderUnits;
-	delete battleSimulation;
+	delete b;
 
 	return result;
 }
