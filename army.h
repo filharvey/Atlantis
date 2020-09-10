@@ -80,6 +80,7 @@ class Soldier {
 		int attacktype;
 		int askill;
 		int attacks;
+		int hitDamage;
 		char const *special;
 		int slevel;
 

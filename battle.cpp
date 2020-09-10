@@ -112,6 +112,8 @@ void Battle::DoAttack(int round, Soldier *a, Army *attackers, Army *def,
 			SpecialType *spd = FindSpecial(pMt->mountSpecial);
 			for (i = 0; i < 4; i++) {
 				int times = spd->damage[i].value;
+				int hitDamage =  spd->damage[i].hitDamage;
+
 				if (spd->effectflags & SpecialType::FX_USE_LEV)
 					times *= pMt->specialLev;
 				int realtimes = spd->damage[i].minnum + getrandom(times) +
@@ -120,7 +122,7 @@ void Battle::DoAttack(int round, Soldier *a, Army *attackers, Army *def,
 						spd->damage[i].type, pMt->specialLev,
 						spd->damage[i].flags, spd->damage[i].dclass,
 						spd->damage[i].effect, 0, a, attackers,
-						canattackback, 1);
+						canattackback, hitDamage);
 				if (num != -1) {
 					if (tot == -1) tot = num;
 					else tot += num;
@@ -159,15 +161,18 @@ void Battle::DoAttack(int round, Soldier *a, Army *attackers, Army *def,
 		int attackType = ATTACK_COMBAT;
 		int mountBonus = 0;
 		int attackClass = SLASHING;
+		int hitDamage = a->hitDamage;
+
 		if (pWep) {
 			flags = pWep->flags;
 			attackType = pWep->attackType;
 			mountBonus = pWep->mountBonus;
 			attackClass = pWep->weapClass;
+			hitDamage = pWep->hitDamage;
 		}
 		//
 		def->DoAnAttack(this, NULL, 1, attackType, a->askill, flags, attackClass,
-				NULL, mountBonus, a, attackers, canattackback, 1);
+				NULL, mountBonus, a, attackers, canattackback, hitDamage);
 		if (!def->NumAlive()) break;
 	}
 

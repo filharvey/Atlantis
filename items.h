@@ -192,6 +192,8 @@ class MonType
 		int number;
 		char const *name;
 		char const *abbr;
+
+		int hitDamage;
 };
 
 extern MonType *MonDefs;
@@ -256,6 +258,8 @@ class WeaponType
 		int attackBonus;
 		int defenseBonus;
 		int mountBonus;
+
+		int hitDamage;
 };
 
 extern WeaponType *WeaponDefs;
@@ -328,6 +332,8 @@ class BattleItemType
 		int flags;
 		char const *special;
 		int skillLevel;
+
+		int hitDamage;
 };
 
 extern BattleItemType *BattleItemDefs;

@@ -52,6 +52,7 @@ Soldier::Soldier(Unit * u,Object * o,int regtype,int r,int ass)
 	weapon = -1;
 
 	attacks = 1;
+	hitDamage = 1;
 	attacktype = ATTACK_COMBAT;
 
 	special = NULL;
@@ -137,6 +138,7 @@ Soldier::Soldier(Unit * u,Object * o,int regtype,int r,int ass)
 		if (hits < 1) hits = 1;
 		maxhits = hits;
 		attacks = mp->numAttacks;
+		hitDamage = mp->hitDamage;
 		if (!attacks) attacks = 1;
 		special = mp->special;
 		slevel = mp->specialLevel;
