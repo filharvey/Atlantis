@@ -131,8 +131,8 @@ class Army
 		int RemoveEffects(int num, char const *effect);
 		int DoAnAttack(Battle *, char const *special, int numAttacks, int attackType,
 				int attackLevel, int flags, int weaponClass, char const *effect,
-				int mountBonus, Soldier *attacker, Army *attackers, int attackbehind);
-		void Kill(int);
+				int mountBonus, Soldier *attacker, Army *attackers, int attackbehind, int attackDamage);
+		void Kill(int killed, int damage);
 		void Reset();
 
 		//

@@ -1162,7 +1162,7 @@ int Army::RemoveEffects(int num, char const *effect)
 
 int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attackType,
 		int attackLevel, int flags, int weaponClass, char const *effect,
-		int mountBonus, Soldier *attacker, Army *attackers, int attackbehind)
+		int mountBonus, Soldier *attacker, Army *attackers, int attackbehind, int attackDamage)
 {
 	/* 1. Check against Global effects (not sure how yet) */
 	/* 2. Attack shield */
@@ -1277,7 +1277,7 @@ int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attack
 			}
 
 			/* 8. Seeya! */
-			Kill(tarnum);
+			Kill(tarnum, attackDamage);
 			ret++;
 			if ((ItemDefs[tar->race].type & IT_MAN) &&
 				(ItemDefs[attacker->race].type & IT_UNDEAD)) {
@@ -1297,7 +1297,7 @@ int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attack
 	return ret;
 }
 
-void Army::Kill(int killed)
+void Army::Kill(int killed, int damage)
 {
 	Soldier *temp = soldiers[killed];
 
@@ -1305,8 +1305,14 @@ void Army::Kill(int killed)
 
 	if (Globals->ARMY_ROUT == GameDefs::ARMY_ROUT_HITS_INDIVIDUAL)
 		hitsalive--;
-	temp->hits--;
-	temp->damage++;
+
+	int hitsLeft = temp->hits - damage;
+	if (hitsLeft < 0) hitsLeft = 0;
+	int doneDamage = temp->hits - hitsLeft;
+
+	temp->hits -= doneDamage;
+	temp->damage += doneDamage;
+	
 	if (temp->hits > 0) return;
 	temp->unit->losses++;
 	if (Globals->ARMY_ROUT == GameDefs::ARMY_ROUT_HITS_FIGURE) {

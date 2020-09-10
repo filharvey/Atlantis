@@ -120,7 +120,7 @@ void Battle::DoAttack(int round, Soldier *a, Army *attackers, Army *def,
 						spd->damage[i].type, pMt->specialLev,
 						spd->damage[i].flags, spd->damage[i].dclass,
 						spd->damage[i].effect, 0, a, attackers,
-						canattackback);
+						canattackback, 1);
 				if (num != -1) {
 					if (tot == -1) tot = num;
 					else tot += num;
@@ -167,7 +167,7 @@ void Battle::DoAttack(int round, Soldier *a, Army *attackers, Army *def,
 		}
 		//
 		def->DoAnAttack(this, NULL, 1, attackType, a->askill, flags, attackClass,
-				NULL, mountBonus, a, attackers, canattackback);
+				NULL, mountBonus, a, attackers, canattackback, 1);
 		if (!def->NumAlive()) break;
 	}
 
