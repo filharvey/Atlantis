@@ -1162,6 +1162,21 @@ int Army::RemoveEffects(int num, char const *effect)
 	return(ret);
 }
 
+WeaponBonusMalus* GetWeaponBonusMalus(WeaponType *weapon, WeaponType *target) {
+	int bmLen = sizeof(weapon->bonusMalus) / sizeof(WeaponBonusMalus);
+
+	for (int i = 0; i < bmLen; i++) {
+		WeaponBonusMalus bm = weapon->bonusMalus[i];
+		if (!bm.weaponAbbr) continue;
+
+		if (bm.weaponAbbr == target->abbr) {
+			return &bm;
+		}
+	}
+
+	return NULL;
+}
+
 int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attackType,
 		int attackLevel, int flags, int weaponClass, char const *effect,
 		int mountBonus, Soldier *attacker, Army *attackers, int attackbehind, int attackDamage)
@@ -1247,6 +1262,25 @@ int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attack
 		/* 4.3 Add bonuses versus mounted */
 		if (tar->riding != -1) attackLevel += mountBonus;
 
+		// 4.4 Check for weapon inflicted bonuses
+		if (attacker->weapon && tar->weapon) {
+			WeaponType *attackerWeapon = FindWeapon(ItemDefs[attacker->weapon].abr);
+			WeaponType *targetWeapon = FindWeapon(ItemDefs[tar->weapon].abr);
+
+			WeaponBonusMalus *attackerBm = GetWeaponBonusMalus(attackerWeapon, targetWeapon);
+			WeaponBonusMalus *defenderBm = GetWeaponBonusMalus(targetWeapon, attackerWeapon);
+
+			// attacker will get bonus to attack if defender uses weapon to which attackers weapon has bonus
+			if (attackerBm) {
+				attackLevel += attackerBm->attackModifer;
+			}
+
+			// defender will get bonus to defense if attacker uses weapon to which defenders weapon has bonus
+			if (defenderBm) {
+				tlev += defenderBm->defenseModifer;
+			}
+		}
+
 		/* 5. Attack soldier */
 		if (attackType != NUM_ATTACK_TYPES) {
 			if (!(flags & WeaponType::ALWAYSREADY)) {
@@ -1260,7 +1294,7 @@ int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attack
 			}
 
 			if (combat) {
-				/* 4.4 Add advanced tactics bonus */
+				/* 5.1 Add advanced tactics bonus */
 				if (!Hits(attackLevel + attackers->tactics_bonus, tlev + tactics_bonus)) {
 					continue;
 				}

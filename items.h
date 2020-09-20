@@ -211,6 +211,14 @@ enum {
 };
 
 
+// Describes bonus/mauls against another weapon
+class WeaponBonusMalus {
+	public:
+		char const *weaponAbbr;	// weapon abbreviation
+		int attackModifer;		// how much increase/decrase attack versus this weapon
+		int defenseModifer;		// how much increase/decrase defense versus this weapon
+};
+
 class WeaponType
 {
 	public:
@@ -260,6 +268,8 @@ class WeaponType
 		int mountBonus;
 
 		int hitDamage;
+
+		WeaponBonusMalus bonusMalus[4];
 };
 
 extern WeaponType *WeaponDefs;

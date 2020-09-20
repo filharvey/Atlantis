@@ -1,4 +1,4 @@
-// START A3HEADER
+ START A3HEADER
 //
 // This source file is part of the Atlantis PBM game program.
 // Copyright (C) 1995-1999 Geoff Dunbar
@@ -2764,6 +2764,7 @@ int NUMMONSTERS = sizeof(md) / sizeof(md[0]);
 //  weapClass, attackType, numAttacks
 //  attackBonus, defenseBonus, mountBonus
 //  damage
+//  bonus/mauls vs another weapons
 //
 WeaponType wepd[] = {
 	// WEAPON_NONE
@@ -2772,77 +2773,99 @@ WeaponType wepd[] = {
 	 NULL, NULL,
 	 0, 0, 0,
 	 0, 0, 0,
-	 0},
+	 0,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_SUPERBOW
 	{"SBOW",
 	 WeaponType::NEEDSKILL | WeaponType::RANGED | WeaponType::NOATTACKERSKILL,
 	 "LBOW", "XBOW",
 	 ARMORPIERCING, ATTACK_RANGED, WeaponType::NUM_ATTACKS_SKILL,
 	 2, 0, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_DOUBLEBOW
 	{"DBOW",
 	 WeaponType::NEEDSKILL | WeaponType::RANGED | WeaponType::NOATTACKERSKILL,
 	 "LBOW", NULL,
 	 ARMORPIERCING, ATTACK_RANGED, WeaponType::NUM_ATTACKS_SKILL,
 	 0, 0, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_RUNESWORD
 	{"RUNE",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 SLASHING, ATTACK_COMBAT, 1,
 	 5, 5, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_MCROSSBOW
 	{"MXBO",
 	 WeaponType::NEEDSKILL | WeaponType::RANGED | WeaponType::NOATTACKERSKILL,
 	 "XBOW", NULL,
 	 ARMORPIERCING, ATTACK_RANGED, 1,
 	 0, 0, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_LONGBOW
 	{"LBOW",
 	 WeaponType::NEEDSKILL | WeaponType::RANGED | WeaponType::NOATTACKERSKILL,
 	 "LBOW", NULL,
 	 PIERCING, ATTACK_RANGED, 1,
 	 -1, 0, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_HEAVYCROSSBOW
 	{"HXBO",
 	 WeaponType::NEEDSKILL | WeaponType::RANGED | WeaponType::NOATTACKERSKILL,
 	 "XBOW", NULL,
 	 ARMORPIERCING, ATTACK_RANGED, -3,
 	 3, 0, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_BOW
 	{"BOW",
 	 WeaponType::NEEDSKILL | WeaponType::RANGED | WeaponType::NOATTACKERSKILL,
 	 "LBOW", NULL,
 	 PIERCING, ATTACK_RANGED, 2,
 	 -3, 0, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_SHORTBOW
 	{"SHBO",
 	 WeaponType::NEEDSKILL | WeaponType::RANGED | WeaponType::NOATTACKERSKILL,
 	 "LBOW", NULL,
 	 PIERCING, ATTACK_RANGED, 3,
 	 -4, 0, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_CROSSBOW
 	{"XBOW",
 	 WeaponType::NEEDSKILL | WeaponType::RANGED | WeaponType::NOATTACKERSKILL,
 	 "XBOW", NULL,
 	 ARMORPIERCING, ATTACK_RANGED, -2,
 	 0, 0, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_JAVELIN
 	{"JAVE",
 	 WeaponType::RANGED|WeaponType::RIDINGBONUSDEFENSE,
 	 "COMB", NULL,
 	 PIERCING, ATTACK_RANGED, -2,
 	 -1, 0, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_LANCE
 	{"LANC",
 	 WeaponType::NEEDSKILL | WeaponType::NOFOOT | WeaponType::RIDINGBONUS |
@@ -2850,140 +2873,180 @@ WeaponType wepd[] = {
 	 "RIDI", NULL,
 	 PIERCING, ATTACK_RIDING, 1,
 	 4, 0, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_ABAX
 	{"ABAX",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 ARMORPIERCING, ATTACK_COMBAT, -2,
 	 8, 8, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_ASWR
 	{"ASWR",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 ARMORPIERCING, ATTACK_COMBAT,1,
 	 6, 6, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_FSWORD
 	{"FSWO",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 SLASHING, ATTACK_COMBAT, 1,
 	 4, 4, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_MBAXE
 	{"MBAX",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 CLEAVING, ATTACK_COMBAT, -2,
 	 6, 6, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_MSWORD
 	{"MSWO",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 SLASHING, ATTACK_COMBAT, 1,
 	 4, 4, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_PIKE
 	{"PIKE",
 	 WeaponType::NOMOUNT | WeaponType::LONG,
 	 "COMB", NULL,
 	 PIERCING, ATTACK_COMBAT, 1,
 	 2, 2, 3,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_BAXE
 	{"BAXE",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 CLEAVING, ATTACK_COMBAT, -2,
 	 3, 3, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_BHAMMER
 	{"BHAM",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 CRUSHING, ATTACK_COMBAT, 1,
 	 3, 3, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_SABRE
 	{"SABR",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 SLASHING, ATTACK_COMBAT, 1,
 	 3, 2, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_MSTAR
 	{"MSTA",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 CRUSHING, ATTACK_COMBAT, 1,
 	 4, 1, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_SWORD
 	{"SWOR",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 SLASHING, ATTACK_COMBAT, 1,
 	 2, 2, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_MACE
 	{"MACE",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 CRUSHING, ATTACK_COMBAT, 1,
 	 2, 2, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_QSTAFF
 	{"QUAR",
 	 WeaponType::NOMOUNT | WeaponType::LONG,
 	 "COMB", NULL,
 	 CRUSHING, ATTACK_COMBAT, 1,
 	 1, 3, 1,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_PDAGGER
 	{"PDAG",
 	 WeaponType::SHORT | WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 PIERCING, ATTACK_COMBAT, 2,
 	 1, 5, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_DAGGER
 	{"DAGG",
 	 WeaponType::SHORT | WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 PIERCING, ATTACK_COMBAT, 3,
 	 1, 1, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_PICK
 	{"PICK",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 PIERCING, ATTACK_COMBAT, 1,
 	 1, 1, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_SPEAR
 	{"SPEA",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 PIERCING, ATTACK_COMBAT, 1,
 	 1, 1, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_AXE
 	{"AXE",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 CLEAVING, ATTACK_COMBAT, 1,
 	 1, 1, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 	// WEAPON_HAMMER
 	{"HAMM",
 	 WeaponType::RIDINGBONUS,
 	 "COMB", NULL,
 	 CRUSHING, ATTACK_COMBAT, 1,
 	 1, 1, 0,
-	 1},
+	 1,
+	 { { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 }, { NULL, 0, 0 } }
+	},
 };
 
 WeaponType *WeaponDefs = wepd;
