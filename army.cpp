@@ -1166,11 +1166,11 @@ WeaponBonusMalus* GetWeaponBonusMalus(WeaponType *weapon, WeaponType *target) {
 	int bmLen = sizeof(weapon->bonusMalus) / sizeof(WeaponBonusMalus);
 
 	for (int i = 0; i < bmLen; i++) {
-		WeaponBonusMalus bm = weapon->bonusMalus[i];
-		if (!bm.weaponAbbr) continue;
+		WeaponBonusMalus *bm = &weapon->bonusMalus[i];
+		if (!bm->weaponAbbr) continue;
 
-		if (bm.weaponAbbr == target->abbr) {
-			return &bm;
+		if (bm->weaponAbbr == target->abbr) {
+			return bm;
 		}
 	}
 
