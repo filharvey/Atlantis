@@ -354,6 +354,19 @@ void Game::ModifyWeaponBonuses(char const *weap, int attack, int defense, int vs
 	pw->mountBonus = vsMount;
 }
 
+void Game::ModifyWeaponBonusMalus(char const *weap, int index, char *weaponAbbr, int attackModifer, int defenseModifer)
+{
+	WeaponType *pw = FindWeapon(weap);
+	if (pw == NULL) return;
+
+	if (pw->bonusMalus[index].weaponAbbr) {
+		delete pw->bonusMalus[index].weaponAbbr;
+	}
+	pw->bonusMalus[index].weaponAbbr = weaponAbbr;
+	pw->bonusMalus[index].attackModifer = attackModifer;
+	pw->bonusMalus[index].defenseModifer = defenseModifer;
+}
+
 void Game::ModifyArmorFlags(char const *armor, int flags)
 {
 	ArmorType *pa = FindArmor(armor);

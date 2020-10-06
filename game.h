@@ -224,6 +224,7 @@ private:
 	void ModifyWeaponFlags(char const *weap, int flags);
 	void ModifyWeaponAttack(char const *weap, int wclass, int attackType, int numAtt, int hitDamage);
 	void ModifyWeaponBonuses(char const *weap, int attack, int defense, int vsMount);
+	void ModifyWeaponBonusMalus(char const *weap, int index, char *weaponAbbr, int attackModifer, int defenseModifer);
 
 	void ModifyArmorFlags(char const *armor, int flags);
 	void ModifyArmorSaveFrom(char const *armor, int from);

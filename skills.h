@@ -173,7 +173,7 @@ class DamageType {
 		int flags;
 		int dclass;
 		char const *effect;
-		int hitDamage;
+		int hitDamage = 1;
 };
 
 class ShieldType {

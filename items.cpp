@@ -304,9 +304,10 @@ static AString EffectStr(char const *effect)
 	return temp;
 }
 
-static AString AttackDamageDescription(int damage) {
-	AString s = "each attack deals " + damage;
-	s += " hitpoint damage";
+static AString AttackDamageDescription(const int damage) {
+	AString s;
+	
+	s = AString("attack deals ") + damage + " hitpoint damage";
 
 	return s;
 }
@@ -513,7 +514,7 @@ AString ShowSpecial(char const *special, int level, int expandLevel, int fromIte
 		if (!expandLevel) {
 			temp += " times the skill level of the mage";
 		}
-		temp += AString(" ") + AttType(spd->damage[i].type) + " attacks and " + AttackDamageDescription(spd->damage[i].hitDamage) + ".";
+		temp += AString(" ") + AttType(spd->damage[i].type) + " attacks and each " + AttackDamageDescription(spd->damage[i].hitDamage) + ".";
 		if (spd->damage[i].effect) {
 			temp += " Each attack causes the target to be effected by ";
 			temp += EffectStr(spd->damage[i].effect);
@@ -771,7 +772,7 @@ AString *ItemDescription(int item, int full)
 		*temp += " This is a monster.";
 		MonType *mp = FindMonster(ItemDefs[item].abr,
 				(ItemDefs[item].type & IT_ILLUSION));
-		*temp += AString(" This monster attacks with a combat skill of ") + mp->attackLevel + ".";
+		*temp += AString(" This monster attacks with a combat skill of ") + mp->attackLevel;
 
 		for (int c = 0; c < NUM_ATTACK_TYPES; c++) {
 			*temp += AString(" ") + MonResist(c,mp->defense[c], full);
@@ -789,7 +790,14 @@ AString *ItemDescription(int item, int full)
 			if (!atts) atts = 1;
 			*temp += AString(" This monster has ") + atts + " melee " +
 				((atts > 1)?"attacks":"attack") + " per round and takes " +
-				hits + " " + ((hits > 1)?"hits":"hit") + " to kill " + " and " + AttackDamageDescription(mp->hitDamage) + ".";
+				hits + " " + ((hits > 1)?"hits":"hit") + " to kill";
+
+			if (atts > 0) {
+				*temp += AString(" and each ") + AttackDamageDescription(mp->hitDamage);
+			}
+
+			*temp += AString(".");
+
 			if (regen > 0) {
 				*temp += AString(" This monsters regenerates ") + regen +
 					" hits per round of battle.";
@@ -861,7 +869,7 @@ AString *ItemDescription(int item, int full)
 	if (ItemDefs[item].type & IT_WEAPON) {
 		WeaponType *pW = FindWeapon(ItemDefs[item].abr);
 		*temp += " This is a ";
-		*temp += WeapType(pW->flags, pW->weapClass) + " weapon and " + AttackDamageDescription(pW->hitDamage) + ".";
+		*temp += WeapType(pW->flags, pW->weapClass) + " weapon and each " + AttackDamageDescription(pW->hitDamage) + ".";
 		if (pW->flags & WeaponType::NEEDSKILL) {
 			pS = FindSkill(pW->baseSkill);
 			if (pS) {
