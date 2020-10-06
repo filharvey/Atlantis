@@ -211,12 +211,14 @@ enum {
 };
 
 
+#define MAX_WEAPON_BM_TARGETS	4
+
 // Describes bonus/mauls against another weapon
 class WeaponBonusMalus {
 	public:
 		char const *weaponAbbr;	// weapon abbreviation
-		int attackModifer;		// how much increase/decrase attack versus this weapon
-		int defenseModifer;		// how much increase/decrase defense versus this weapon
+		int32_t attackModifer;		// how much increase/decrase attack versus this weapon
+		int32_t defenseModifer;		// how much increase/decrase defense versus this weapon
 };
 
 class WeaponType
@@ -269,7 +271,7 @@ class WeaponType
 
 		int hitDamage;
 
-		WeaponBonusMalus bonusMalus[4];
+		WeaponBonusMalus bonusMalus[MAX_WEAPON_BM_TARGETS];
 };
 
 extern WeaponType *WeaponDefs;

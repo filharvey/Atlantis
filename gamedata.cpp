@@ -2331,6 +2331,7 @@ ItemType id[] =
 	"", { "", "", "", "" }, 0, 0},
 };
 ItemType *ItemDefs = id;
+int NUMITEMS = sizeof(id) / sizeof(id[0]);
 
 //
 // Table of men

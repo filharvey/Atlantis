@@ -25,6 +25,7 @@
 #include "army.h"
 #include "gameio.h"
 #include "gamedata.h"
+#include <string.h>
 
 enum {
 	WIN_NO_DEAD,
@@ -1163,13 +1164,11 @@ int Army::RemoveEffects(int num, char const *effect)
 }
 
 WeaponBonusMalus* GetWeaponBonusMalus(WeaponType *weapon, WeaponType *target) {
-	int bmLen = sizeof(weapon->bonusMalus) / sizeof(WeaponBonusMalus);
-
-	for (int i = 0; i < bmLen; i++) {
+	for (int i = 0; i < MAX_WEAPON_BM_TARGETS; i++) {
 		WeaponBonusMalus *bm = &weapon->bonusMalus[i];
 		if (!bm->weaponAbbr) continue;
 
-		if (bm->weaponAbbr == target->abbr) {
+		if (strcmp(bm->weaponAbbr, target->abbr) == 0) {
 			return bm;
 		}
 	}
@@ -1342,12 +1341,8 @@ void Army::Kill(int killed, int damage)
 	if (Globals->ARMY_ROUT == GameDefs::ARMY_ROUT_HITS_INDIVIDUAL)
 		hitsalive--;
 
-	int hitsLeft = temp->hits - damage;
-	if (hitsLeft < 0) hitsLeft = 0;
-	int doneDamage = temp->hits - hitsLeft;
-
-	temp->hits -= doneDamage;
-	temp->damage += doneDamage;
+	temp->damage += std::min(temp->hits, damage);
+	temp->hits = std::max(0, temp->hits - damage);
 	
 	if (temp->hits > 0) return;
 	temp->unit->losses++;

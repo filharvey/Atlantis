@@ -62,6 +62,18 @@ WeaponType *FindWeapon(char const *abbr)
 	return NULL;
 }
 
+ItemType *FindItem(char const *abbr)
+{
+	if (abbr == NULL) return NULL;
+	for (int i = 0; i < NUMITEMS; i++) {
+		if (ItemDefs[i].abr == NULL) continue;
+
+		if (AString(abbr) == ItemDefs[i].abr) return &ItemDefs[i];
+	}
+
+	return NULL;
+}
+
 MountType *FindMount(char const *abbr)
 {
 	if (abbr == NULL) return NULL;
@@ -977,6 +989,30 @@ AString *ItemDescription(int item, int full)
 				*temp += "1 attack every ";
 				if (atts == 1) *temp += "round .";
 				else *temp += AString(atts) + " rounds.";
+			}
+
+			for (int i = 0; i < MAX_WEAPON_BM_TARGETS; i++) {
+				WeaponBonusMalus *bm = &pW->bonusMalus[i];
+				if (!bm->weaponAbbr) continue;
+				if (bm->attackModifer == 0 && bm->defenseModifer == 0) continue;
+
+				ItemType *target =  FindItem(bm->weaponAbbr);
+
+				*temp += AString(" Wielders of this weapon will get ");
+
+				if (bm->attackModifer != 0) {
+					*temp += AString((bm->attackModifer > 0) ? "bonus of ":"penalty of ") + abs(bm->attackModifer) + " on combat attack";
+				}
+
+				if (bm->defenseModifer != 0) {
+					if (bm->attackModifer != 0) {
+						*temp += AString(" and ");
+					}
+
+					*temp += AString((bm->defenseModifer > 0) ? "bonus of ":"penalty of ") + abs(bm->defenseModifer) + " on combat defense";
+				}
+
+				*temp += AString(" against ") + target->name + " [" + target->abr + "].";
 			}
 		}
 	}
