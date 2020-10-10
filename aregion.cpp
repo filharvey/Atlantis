@@ -317,6 +317,107 @@ int ARegion::TraceConnectedRoad(int dir, int sum, AList *con, int range, int dev
 	return sum;
 }
 
+/*int ARegion::RoadDevelopmentBonus(int range, int dev)
+{
+	int bonus = 0;
+	AList* con = new AList();
+	AList* curr;
+	AList* next = new AList();
+	ARoadRegionPtr* rp = new ARoadRegionPtr();
+	rp->ptr = this;
+	rp->range = range;
+	rp->dev = dev;
+	rp->bonus = 0;
+
+	cout << "New Region: " << xloc << ", " << yloc << endl;
+
+	con->Add(rp);
+	next->Add(rp);
+
+	// if there are any to check process
+	while (next->Num() > 0)
+	{
+		curr = next;
+		next = new AList();
+
+		// for each region, check neighbours
+		forlist(curr) {
+			ARoadRegionPtr* reg = (ARoadRegionPtr*)elem;
+			ARegion* currReg = reg->ptr;
+
+			cout << "Curr Region: " << currReg->xloc << ", " << currReg->yloc << endl;
+
+			if (reg->range > 0)
+			{
+				for (int d = 0; d < NDIRS; d++)
+				{
+					// is there a road
+					if (!currReg->HasExitRoad(d)) continue;
+					ARegion* r = currReg->neighbors[d];
+					if (!r) continue;
+
+					// do they connect to a region
+					if (currReg->HasConnectingRoad(d)) {
+						int isNew = 1;
+						// have we processed the region all ready
+						forlist(con) {
+							ARoadRegionPtr* regNext = (ARoadRegionPtr*)elem;
+							if ((regNext) && (regNext->ptr)) {
+								if (regNext->ptr == r)
+								{
+									isNew = 0;
+
+									// should never happen
+									if (regNext->range < reg->range - 1)
+									{
+										rp->range = reg->range - 1;
+										rp->dev = reg->dev + 2;
+									}
+								}
+							}
+						}
+
+						// if there is a road add
+						if (isNew)
+						{
+							rp = new ARoadRegionPtr();
+							rp->ptr = r;
+							rp->range = reg->range - 1;
+							rp->dev = reg->dev + 2;
+							rp->bonus = 0;
+							next->Add(rp);
+							con->Add(rp);
+
+							cout << "New Region: " << r->xloc << ", " << r->yloc << endl;
+						}
+					}
+				}
+			}
+		}
+		delete curr;
+	}
+
+	delete next;
+
+	forlist(con) {
+		ARoadRegionPtr* reg = (ARoadRegionPtr*)elem;
+		ARegion* currReg = reg->ptr;
+
+		// Add bonus for connecting town
+		if (currReg->town) reg->bonus++;
+
+		// Add bonus if development is higher
+		if (currReg->development > reg->dev + 9) reg->bonus++;
+		if (currReg->development * 2 > reg->dev * 5) reg->bonus++;
+
+		//		reg->ptr->calcRoadDevelopmentBonus(reg);
+		bonus += reg->bonus;
+	}
+
+	delete con;
+	return bonus;
+}
+*/
 int ARegion::RoadDevelopmentBonus(int range, int dev)
 {
 	int bonus = 0;

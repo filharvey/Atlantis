@@ -118,6 +118,16 @@ class ARegionPtr : public AListElem
 
 ARegionPtr *GetRegion(AList *, int);
 
+class ARoadRegionPtr : public AListElem
+{
+public:
+	ARegion* ptr;
+	int bonus;
+	int range;
+	int dev;
+};
+
+
 class Farsight : public AListElem
 {
 	public:
