@@ -1,4 +1,4 @@
- START A3HEADER
+// START A3HEADER
 //
 // This source file is part of the Atlantis PBM game program.
 // Copyright (C) 1995-1999 Geoff Dunbar
@@ -2331,7 +2331,6 @@ ItemType id[] =
 	"", { "", "", "", "" }, 0, 0},
 };
 ItemType *ItemDefs = id;
-int NUMITEMS = sizeof(id) / sizeof(id[0]);
 
 //
 // Table of men
@@ -2744,13 +2743,13 @@ MonType md[] = {
    0,30,0,
    0,0,0,
    "catapult strike",8,
-   0,-1,0,0,"Catapult", "CATP", 1},
+   0,-1,0,0,"Catapult", "CATP", 0},
 
    {0,{3,1,5,2,2,1},
    0,150,0,
    0,0,0,
    NULL,0,
-   0,-1,0,0,"Steel Defender","STED", 1},
+   0,-1,0,0,"Steel Defender","STED", 0},
 };
 
 MonType *MonDefs = md;
