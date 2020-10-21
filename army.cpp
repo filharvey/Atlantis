@@ -1028,7 +1028,7 @@ Soldier * Army::GetAttacker(int i,int &behind)
 	return retval;
 }
 
-int Army::GetTargetNum(char const *special, int canAttackBehind)
+int Army::GetTargetNum(char const *special, bool canAttackBehind)
 {
 	int tars = NumFront();
 	if (canAttackBehind) {
@@ -1178,7 +1178,7 @@ WeaponBonusMalus* GetWeaponBonusMalus(WeaponType *weapon, WeaponType *target) {
 
 int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attackType,
 		int attackLevel, int flags, int weaponClass, char const *effect,
-		int mountBonus, Soldier *attacker, Army *attackers, int attackbehind, int attackDamage)
+		int mountBonus, Soldier *attacker, Army *attackers, bool attackbehind, int attackDamage)
 {
 	/* 1. Check against Global effects (not sure how yet) */
 	/* 2. Attack shield */

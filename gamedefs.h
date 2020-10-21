@@ -713,6 +713,19 @@ public:
 	int ADVANCED_TACTICS;
 
 	// Combat overwhelming.
+	//
+	// It limits the BEHIND flag as too few front line troops won' t be able to defend the combatants
+	// in the back line if the attacker is remarkably larger. There will be a message in the battle
+	// report teeling you if one side is overwhelmed. After this has happened all units of the
+	// overwhelmed side fight as if they were in the front line.
+	//
+	// You need as many times the number of front line troops to overwhelm an enemy as you have set
+	// in OVERWHELMING varaible. Setting 0 effectively turns this featur off, but settining it to 2
+	// will mean that one army front line must be 2X larger than other army front line to achieve
+	// overwhelming.
+	// 
+	// This feature uses ARMY_ROUT setting to determine how size of the army is determined, by hits
+	// or by figure count.
 	int OVERWHELMING;
 };
 

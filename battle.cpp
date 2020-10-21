@@ -57,7 +57,7 @@ bool IsArmyOverwhelmedBy(Army * a, Army * b) {
 		bPower = b->NumFrontHits();
 	}
 
-	return bPower > aPower && a->NumFront() && a->NumBehind();
+	return bPower > aPower;
 }
 
 void Battle::FreeRound(Army * att,Army * def, int ass)
@@ -100,7 +100,7 @@ void Battle::FreeRound(Army * att,Army * def, int ass)
 }
 
 void Battle::DoAttack(int round, Soldier *a, Army *attackers, Army *def,
-		int behind, int ass, int canattackback)
+		int behind, int ass, bool canattackback)
 {
 	DoSpecialAttack(round, a, attackers, def, behind, canattackback);
 	if (!def->NumAlive()) return;
