@@ -217,8 +217,8 @@ enum {
 class WeaponBonusMalus {
 	public:
 		char const *weaponAbbr;	// weapon abbreviation
-		int32_t attackModifer;		// how much increase/decrase attack versus this weapon
-		int32_t defenseModifer;		// how much increase/decrase defense versus this weapon
+		int attackModifer;		// how much increase/decrase attack versus this weapon
+		int defenseModifer;		// how much increase/decrase defense versus this weapon
 };
 
 class WeaponType
