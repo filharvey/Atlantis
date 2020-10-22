@@ -25,7 +25,26 @@
 #include "army.h"
 #include "gameio.h"
 #include "gamedata.h"
-#include <string.h>
+
+// as we are not using STD we need this...
+int min(const int a, const int b) {
+	return a > b ? b : a;
+}
+
+int max(const int a, const int b) {
+	return a > b ? a : b;
+}
+
+bool stringCompare(const char *str1, const char *str2) {
+    while (*str1 == *str2) {
+        if (*str1 == '\0' && *str2 == '\0') return true; 
+        
+		str1++; 
+        str2++; 
+    }
+
+    return false;
+}
 
 enum {
 	WIN_NO_DEAD,
@@ -1168,7 +1187,7 @@ WeaponBonusMalus* GetWeaponBonusMalus(WeaponType *weapon, WeaponType *target) {
 		WeaponBonusMalus *bm = &weapon->bonusMalus[i];
 		if (!bm->weaponAbbr) continue;
 
-		if (strcmp(bm->weaponAbbr, target->abbr) == 0) {
+		if (stringCompare(bm->weaponAbbr, target->abbr)) {
 			return bm;
 		}
 	}
@@ -1341,8 +1360,8 @@ void Army::Kill(int killed, int damage)
 	if (Globals->ARMY_ROUT == GameDefs::ARMY_ROUT_HITS_INDIVIDUAL)
 		hitsalive--;
 
-	temp->damage += std::min(temp->hits, damage);
-	temp->hits = std::max(0, temp->hits - damage);
+	temp->damage += min(temp->hits, damage);
+	temp->hits = max(0, temp->hits - damage);
 	
 	if (temp->hits > 0) return;
 	temp->unit->losses++;
