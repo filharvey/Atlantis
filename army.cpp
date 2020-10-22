@@ -35,17 +35,6 @@ int max(const int a, const int b) {
 	return a > b ? a : b;
 }
 
-bool stringCompare(const char *str1, const char *str2) {
-    while (*str1 == *str2) {
-        if (*str1 == '\0' && *str2 == '\0') return true; 
-        
-		str1++; 
-        str2++; 
-    }
-
-    return false;
-}
-
 enum {
 	WIN_NO_DEAD,
 	WIN_DEAD,
@@ -1187,7 +1176,7 @@ WeaponBonusMalus* GetWeaponBonusMalus(WeaponType *weapon, WeaponType *target) {
 		WeaponBonusMalus *bm = &weapon->bonusMalus[i];
 		if (!bm->weaponAbbr) continue;
 
-		if (stringCompare(bm->weaponAbbr, target->abbr)) {
+		if (AString(bm->weaponAbbr) == target->abbr) {
 			return bm;
 		}
 	}

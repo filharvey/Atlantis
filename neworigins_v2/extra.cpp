@@ -783,11 +783,11 @@ void Game::ModifyTablesPerRuleset(void)
 	ModifyWeaponAttack("DBOW",
 			ARMORPIERCING,
 			ATTACK_RANGED,
-			WeaponType::NUM_ATTACKS_HALF_SKILL);
+			WeaponType::NUM_ATTACKS_HALF_SKILL, 1);
 	ModifyWeaponAttack("RUNE",
 			SLASHING,
 			ATTACK_COMBAT,
-			WeaponType::NUM_ATTACKS_HALF_SKILL);
+			WeaponType::NUM_ATTACKS_HALF_SKILL, 1);
 	EnableItem(I_CLOTHARMOR);
 	EnableItem(I_BOOTS);
 	EnableItem(I_BAXE);
