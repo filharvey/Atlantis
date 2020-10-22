@@ -26,15 +26,6 @@
 #include "gameio.h"
 #include "gamedata.h"
 
-// as we are not using STD we need this...
-int min(const int a, const int b) {
-	return a > b ? b : a;
-}
-
-int max(const int a, const int b) {
-	return a > b ? a : b;
-}
-
 enum {
 	WIN_NO_DEAD,
 	WIN_DEAD,

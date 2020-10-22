@@ -27,10 +27,8 @@
 
 #include <functional>
 #include <map>
+using namespace std;
 
-// as we are not using STD we need this...
-int min(const int, const int);
-int max(const int, const int);
 WeaponBonusMalus* GetWeaponBonusMalus(WeaponType *, WeaponType *);
 
 class Soldier;
