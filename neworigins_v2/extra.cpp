@@ -1258,5 +1258,15 @@ void Game::ModifyTablesPerRuleset(void)
 		EnableSkill(S_QUARTERMASTER);
 		EnableObject(O_CARAVANSERAI);
 	}
+
+
+	// Weapon BM example
+
+	// Make SWOR to have malus of -1 on attack and -2 on defense vs. SPEA
+	// ModifyWeaponBonusMalus("SWOR", 0, "SPEA", -1, -2);
+
+	// At the same time give SPEA bonus of 2 on attacka and 2 on defense vs. SWOR
+	// ModifyWeaponBonusMalus("SPEA", 0, "SWOR", 2, 2);
+
 	return;
 }
