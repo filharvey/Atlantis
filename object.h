@@ -91,6 +91,10 @@ class Object : public AListElem
 		void Writeout(Aoutfile *f);
 		void Report(Areport *, Faction *, int, int, int, int, int, int, int);
 
+#if EXPORT_JSON
+		void ReportJSON(AreportJSON *, Faction *, int, int, int, int, int, int, int);
+#endif
+
 		void SetName(AString *);
 		void SetDescribe(AString *);
 

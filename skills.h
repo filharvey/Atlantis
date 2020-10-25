@@ -115,6 +115,10 @@ class ShowType {
 };
 extern ShowType * ShowDefs;
 
+#if EXPORT_JSON
+void WriteSkillPropsToJSON(AreportJSON *, int);
+#endif
+
 int SkillCost(int);
 int SkillMax(char const *,int); /* skill, race */
 int GetLevelByDays(int);
@@ -155,6 +159,10 @@ class SkillList : public AList {
 		AString Report(int); /* Number of men */
 		void Readin(Ainfile *);
 		void Writeout(Aoutfile *);
+
+#if EXPORT_JSON
+		void ReportJSON(AreportJSON *f, int); /* Number of men */
+#endif
 };
 
 class HealType {

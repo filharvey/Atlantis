@@ -40,6 +40,10 @@ public:
 	void Writeout(Aoutfile *);
 	void Readin(Ainfile *);
 	AString WriteReport();
+
+#if EXPORT_JSON
+	void WriteReportJSON(AreportJSON *f);
+#endif
 	
 	int itemtype;
 	int baseamount;

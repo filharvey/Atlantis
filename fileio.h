@@ -31,6 +31,13 @@
 #include <fstream>
 using namespace std;
 
+#ifdef EXPORT_JSON
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+using namespace rapidjson;
+#endif
+
 class Ainfile {
 	public:
 		Ainfile();
@@ -97,6 +104,35 @@ class Areport {
 		ofstream *file;
 		int tabs;
 };
+
+#if EXPORT_JSON
+class AreportJSON {
+public:
+	AreportJSON();
+	~AreportJSON();
+
+	void Open(const AString &);
+	int OpenByName(const AString &);
+	void Close();
+
+	void StartObject();
+	void EndObject();
+
+	void StartArray();
+	void EndArray();
+
+	void Key(const AString &);
+	void String(const AString &);
+	void Bool(const bool &);
+	void Int(const int &);
+	void Double(const double &);
+	void Null();
+
+	StringBuffer s;
+	Writer<StringBuffer> *writer;
+	Aoutfile json;
+};
+#endif
 
 class Arules {
 	public:

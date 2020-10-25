@@ -26,6 +26,15 @@
 #include "gameio.h"
 #include "gamedata.h"
 
+#ifdef WIN32
+#ifndef max
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#endif
+#ifndef min
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+#endif
+#endif // WIN32
+
 enum {
 	WIN_NO_DEAD,
 	WIN_DEAD,
@@ -629,6 +638,14 @@ void Army::Reset() {
 }
 
 void Army::WriteLosses(Battle * b) {
+#if EXPORT_JSON
+	b->jsonWriter->Key("name");
+	b->jsonWriter->String((*(leader->name)).Str());
+
+	b->jsonWriter->Key("loses");
+	b->jsonWriter->Int((count - NumAlive()));
+#endif
+
 	b->AddLine(*(leader->name) + " loses " + (count - NumAlive()) + ".");
 
 	if (notbehind != count) {
@@ -641,6 +658,10 @@ void Army::WriteLosses(Battle * b) {
 			}
 		}
 
+#if EXPORT_JSON
+		b->jsonWriter->Key("units");
+		b->jsonWriter->StartArray();
+#endif
 		int comma = 0;
 		AString damaged;
 		forlist (&units) {
@@ -651,10 +672,17 @@ void Army::WriteLosses(Battle * b) {
 				damaged = AString("Damaged units: ") + AString(u->ptr->num);
 				comma = 1;
 			}
+#if EXPORT_JSON
+			b->jsonWriter->Int(u->ptr->num);
+#endif
 		}
 
 		units.DeleteAll();
 		b->AddLine(damaged + ".");
+
+#if EXPORT_JSON
+		b->jsonWriter->EndArray();
+#endif
 	}
 }
 
@@ -737,10 +765,46 @@ void Army::Regenerate(Battle *b)
 					b->AddLine(aName + " takes " + s->damage +
 							" hits bringing it to " + s->hits + "/" +
 							s->maxhits + ".");
+
+#if EXPORT_JSON
+					b->jsonWriter->StartObject();
+
+					b->jsonWriter->Key("name");
+					b->jsonWriter->String(aName.Str());
+
+					b->jsonWriter->Key("hitsTaken");
+					b->jsonWriter->Int(s->damage);
+
+					b->jsonWriter->Key("hits");
+					b->jsonWriter->Int(s->hits);
+
+					b->jsonWriter->Key("maxHits");
+					b->jsonWriter->Int(s->maxhits);
+
+					b->jsonWriter->EndObject();
+#endif
 					s->damage = 0;
 				} else {
 					b->AddLine(aName + " takes no hits leaving it at " +
 							s->hits + "/" + s->maxhits + ".");
+
+#if EXPORT_JSON
+					b->jsonWriter->StartObject();
+
+					b->jsonWriter->Key("name");
+					b->jsonWriter->String(aName.Str());
+
+					b->jsonWriter->Key("hitsTaken");
+					b->jsonWriter->Int(0);
+
+					b->jsonWriter->Key("hits");
+					b->jsonWriter->Int(s->hits);
+
+					b->jsonWriter->Key("maxHits");
+					b->jsonWriter->Int(s->maxhits);
+
+					b->jsonWriter->EndObject();
+#endif
 				}
 				if (s->regen) {
 					int regen = s->regen;
@@ -749,6 +813,24 @@ void Army::Regenerate(Battle *b)
 					b->AddLine(aName + " regenerates " + regen +
 							" hits bringing it to " + s->hits + "/" +
 							s->maxhits + ".");
+
+#if EXPORT_JSON
+					b->jsonWriter->StartObject();
+
+					b->jsonWriter->Key("name");
+					b->jsonWriter->String(aName.Str());
+
+					b->jsonWriter->Key("regenerates");
+					b->jsonWriter->Int(regen);
+
+					b->jsonWriter->Key("hits");
+					b->jsonWriter->Int(s->hits);
+
+					b->jsonWriter->Key("maxHits");
+					b->jsonWriter->Int(s->maxhits);
+
+					b->jsonWriter->EndObject();
+#endif
 				}
 			}
 		}
@@ -757,6 +839,11 @@ void Army::Regenerate(Battle *b)
 
 void Army::Lose(Battle *b,ItemList *spoils)
 {
+#if EXPORT_JSON
+	b->jsonWriter->Key("loses");
+	b->jsonWriter->StartObject();
+#endif
+
 	WriteLosses(b);
 	for (int i=0; i<count; i++) {
 		Soldier * s = soldiers[i];
@@ -769,6 +856,10 @@ void Army::Lose(Battle *b,ItemList *spoils)
 		}
 		delete s;
 	}
+
+#if EXPORT_JSON
+	b->jsonWriter->EndObject();
+#endif
 }
 
 void Army::Tie(Battle * b)
@@ -796,6 +887,11 @@ int Army::CanBeHealed()
 
 void Army::DoHeal(Battle * b)
 {
+#if EXPORT_JSON
+	b->jsonWriter->Key("heals");
+	b->jsonWriter->StartArray();
+#endif
+
 	// Do magical healing
 	for (int i = 5; i > 0; --i) {
 		int rate = MagicHealDefs[i].rate;
@@ -810,6 +906,10 @@ void Army::DoHeal(Battle * b)
 		int rate = HealDefs[i].rate;
 		DoHealLevel(b, i, rate, 1);
 	}
+
+#if EXPORT_JSON
+	b->jsonWriter->EndArray();
+#endif
 }
 
 void Army::DoHealLevel(Battle *b, int level, int rate, int useItems)
@@ -847,19 +947,35 @@ void Army::DoHealLevel(Battle *b, int level, int rate, int useItems)
 		}
 		if (useItems && s->healitem == I_HEALPOTION) {
 			b->AddLine(*(s->unit->name) + " heals " + n + " using healing potion with " + rate + "% chance.");
+			AString tmp = *(s->unit->name) + " heals " + n + " using healing potion with " + rate + "% chance.";
+			b->jsonWriter->String(tmp.Str ());
 		} else {
 			b->AddLine(*(s->unit->name) + " heals " + n + " with " + rate + "% chance.");
+			AString tmp = *(s->unit->name) + " heals " + n + " with " + rate + "% chance.";
+			b->jsonWriter->String(tmp.Str());
 		}
 	}
 }
 
 void Army::Win(Battle * b,ItemList * spoils)
 {
+#if EXPORT_JSON
+	b->jsonWriter->Key("winner");
+	b->jsonWriter->StartObject();
+#endif
+
 	int wintype;
 
 	DoHeal(b);
 
+#if EXPORT_JSON
+	b->jsonWriter->Key("loses");
+	b->jsonWriter->StartObject();
+#endif
 	WriteLosses(b);
+#if EXPORT_JSON
+	b->jsonWriter->EndObject();
+#endif
 
 	int na = NumAlive();
 	int loses_percent = 100;
@@ -952,6 +1068,10 @@ void Army::Win(Battle * b,ItemList * spoils)
 		Soldier * s = soldiers[x];
 		delete s;
 	}
+
+#if EXPORT_JSON
+	b->jsonWriter->EndObject();
+#endif
 }
 
 int Army::Broken()

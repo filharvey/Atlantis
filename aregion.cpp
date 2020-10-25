@@ -1288,11 +1288,6 @@ void ARegion::WriteExits(Areport *f, ARegionList *pRegs, int *exits_seen)
 	f->EndLine();
 }
 
-#define AC_STRING "%s Nexus is a magical place: the entryway " \
-"to the world of %s. Enjoy your stay; the city guards should " \
-"keep you safe as long as you should choose to stay. However, rumor " \
-"has it that once you have left the Nexus, you can never return."
-
 void ARegion::WriteReport(Areport *f, Faction *fac, int month,
 		ARegionList *pRegions)
 {
@@ -2710,3 +2705,27 @@ int ParseTerrain(AString *token)
 	
 	return (-1);
 }
+
+#if EXPORT_JSON
+void ARegionList::CreateBattlegroundWorld()
+{
+	CreateLevels(1);
+
+	ARegionArray *arr = new ARegionArray(1, 1);
+
+	ARegion *reg = new ARegion;
+	reg->SetLoc(0, 0, 0);
+	reg->num = Num();
+	reg->type = R_PLAIN;
+	reg->race = -1;
+	reg->wages = -1;
+	Add(reg);
+	arr->SetRegion(0, 0, reg);
+	arr->SetName("Battlegrounds");
+	arr->levelType = ARegionArray::LEVEL_SURFACE;
+
+	pRegionArrays[0] = arr;
+
+	FinalSetup(pRegionArrays[0]);
+}
+#endif

@@ -371,6 +371,10 @@ enum {
 extern AString ItemString(int type, int num, int flags=0);
 extern AString *ItemDescription(int item, int full);
 
+#if EXPORT_JSON
+extern void ItemStringJSON(Writer<StringBuffer> *f, int type, int num, int flags = 0);
+#endif
+
 extern int IsSoldier(int);
 
 class Item : public AListElem
@@ -378,6 +382,10 @@ class Item : public AListElem
 	public:
 		Item();
 		~Item();
+
+#if EXPORT_JSON
+		void ReportJSON(Writer<StringBuffer> *f, int seeillusions);
+#endif
 
 		void Readin(Ainfile *);
 		void Writeout(Aoutfile *);
@@ -395,6 +403,13 @@ class ItemList : public AList
 	public:
 		void Readin(Ainfile *);
 		void Writeout(Aoutfile *);
+
+#if EXPORT_JSON
+		void ReportJSON(Writer<StringBuffer> *f, int obs, int seeillusions, int nofirstcomma);
+		void BattleReportJSON(Writer<StringBuffer> *);
+		void ReportByTypeJSON(Writer<StringBuffer> *f, int type, int obs, int seeillusions,
+			int nofirstcomma);
+#endif
 
 		AString Report(int, int, int);
 		AString BattleReport();

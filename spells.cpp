@@ -1980,7 +1980,7 @@ int Game::RunBlasphemousRitual(ARegion *r, Unit *mage)
 {
 	int level, num, sactype, sacrifices, i, sac, max, dir;
 	Object *o, *tower;
-	Unit *u, *victim;
+	Unit *u = NULL, *victim;
 	Item *item;
 	ARegion *start;
 	AString message;

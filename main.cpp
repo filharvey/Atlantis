@@ -43,6 +43,8 @@ void usage()
 	Awrite("atlantis genrules <introfile> <cssfile> <rules-outputfile>");
 	Awrite("");
 	Awrite("atlantis check <orderfile> <checkfile>");
+	Awrite("");
+	Awrite("atlantis battle <jsonfile> <count>");
 }
 
 int main(int argc, char *argv[])
@@ -156,7 +158,48 @@ int main(int argc, char *argv[])
 				Awrite("Unable to generate rules!");
 				break;
 			}
-		} else {
+		}
+#if EXPORT_JSON
+		else if (AString(argv[1]) == "battle") {
+			if (argc != 3 && argc != 4) {
+				usage();
+				break;
+			}
+
+			int rounds = 1;
+			if (argc == 4)
+			{
+				rounds = atoi(argv[3]);
+			}
+
+			int wins = 0;
+			int loses = 0;
+
+			seedrandomrandom();
+
+			for (int a = 0; a < rounds; a++)
+			{
+				int result = game.SimulateBattle(argv[2]);
+
+				if (result == BATTLE_WON) 
+					wins++;
+				else if (result == BATTLE_LOST)
+					loses++;
+			}
+
+			float ratio = (wins / (float)rounds) * 100;
+
+			cout << "Battles " << rounds << " wins " << wins << " loses " << loses << " ratio: " << ratio << "%" << endl;
+		}
+		else if (AString(argv[1]) == "exportdata") {
+
+			if (!game.ExportGameData()) {
+				Awrite("Unable to generate battle report!");
+				break;
+			}
+		}
+#endif
+		else {
 			Awrite(AString("Unknown option: ") + argv[1]);
 			break;
 		}

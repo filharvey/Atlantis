@@ -73,7 +73,7 @@ class Battle : public AListElem
 		//
 		// These functions should be implemented in specials.cpp
 		//
-		void UpdateShields(Army *);
+		void UpdateShields(Army *, bool attacker);
 		void DoSpecialAttack( int round, Soldier *a, Army *attackers,
 				Army *def, int behind, int canattackback);
 
@@ -84,6 +84,15 @@ class Battle : public AListElem
 		Faction * attacker; /* Only matters in the case of an assassination */
 		AString * asstext;
 		AList text;
+
+#if EXPORT_JSON
+		StringBuffer s;
+		Writer<StringBuffer> *jsonWriter;
+
+		void ReportJSON(AreportJSON *, Faction *);
+		void WriteSidesJSON(ARegion *, Unit *, Unit *, AList *, AList *, int,
+			ARegionList *pRegs);
+#endif
 };
 
 #endif

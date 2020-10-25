@@ -151,8 +151,12 @@ int Army::CheckSpecialTarget(char const *special,int tar)
 	return 1;
 }
 
-void Battle::UpdateShields(Army *a)
+void Battle::UpdateShields(Army *a, bool attacker)
 {
+#if EXPORT_JSON
+	bool hasWritten = false;
+#endif
+
 	for (int i=0; i<a->notbehind; i++) {
 		int shtype = -1;
 		SpecialType *spd;
@@ -183,9 +187,32 @@ void Battle::UpdateShields(Army *a)
 			}
 		}
 
+#if EXPORT_JSON
+		if (!hasWritten)
+		{
+			if (attacker)
+				jsonWriter->Key("ashields");
+			else
+				jsonWriter->Key("dshields");
+
+			jsonWriter->StartArray();
+			hasWritten = true;
+		}
+
+		jsonWriter->Key((*(a->soldiers[i]->unit->name)).Str());
+		jsonWriter->String(spd->shielddesc);
+#endif
+
 		AddLine(*(a->soldiers[i]->unit->name) + " casts " +
 				spd->shielddesc + ".");
 	}
+
+#if EXPORT_JSON
+	if (hasWritten)
+	{
+		jsonWriter->EndArray();
+	}
+#endif
 }
 
 void Battle::DoSpecialAttack(int round, Soldier *a, Army *attackers,
@@ -200,6 +227,11 @@ void Battle::DoSpecialAttack(int round, Soldier *a, Army *attackers,
 	spd = FindSpecial(a->special);
 
 	if (!(spd->effectflags & SpecialType::FX_DAMAGE)) return;
+
+#if EXPORT_JSON
+	AString jsonResults[4][2];
+	jsonWriter->StartObject();
+#endif
 
 	for (i = 0; i < 4; i++) {
 		if (spd->damage[i].type == -1) continue;
@@ -218,8 +250,17 @@ void Battle::DoSpecialAttack(int round, Soldier *a, Army *attackers,
 		if (spd->effectflags & SpecialType::FX_DONT_COMBINE && num != -1) {
 			if (spd->damage[i].effect == NULL) {
 				results[dam] = AString("killing ") + num;
+#if EXPORT_JSON
+				jsonResults[dam][0] = AString("killing ");
+				jsonResults[dam][1] = num;
+#endif
+
 				dam++;
 			} else {
+#if EXPORT_JSON
+				jsonResults[dam][0] = AString(spd->spelldesc2);
+				jsonResults[dam][1] = num;
+#endif
 				results[dam] = AString(spd->spelldesc2) + num;
 			}
 		}
@@ -229,6 +270,17 @@ void Battle::DoSpecialAttack(int round, Soldier *a, Army *attackers,
 		}
 	}
 	if (tot == -1) {
+#if EXPORT_JSON
+		jsonWriter->Key("name");
+		jsonWriter->String(a->name.Str());
+
+		jsonWriter->Key("description");
+		jsonWriter->String(spd->spelldesc);
+
+		jsonWriter->Key("deflected");
+		jsonWriter->Bool(true);
+#endif
+
 		AddLine(a->name + " " + spd->spelldesc + ", but it is deflected.");
 	} else {
 		if (spd->effectflags & SpecialType::FX_DONT_COMBINE) {
@@ -240,10 +292,47 @@ void Battle::DoSpecialAttack(int round, Soldier *a, Army *attackers,
 			}
 			temp += AString(spd->spelltarget) + ".";
 			AddLine(temp);
+
+#if EXPORT_JSON
+			jsonWriter->Key("name");
+			jsonWriter->String(a->name.Str());
+
+			jsonWriter->Key("description");
+			jsonWriter->String(spd->spelldesc);
+
+			for (i = 0; i < dam; i++) {
+				jsonWriter->Key(jsonResults[dam][0].Str());
+				jsonWriter->String(jsonResults[dam][1].Str());
+			}
+
+			jsonWriter->Key("target");
+			jsonWriter->String(AString(spd->spelltarget).Str());
+#endif
 		} else {
 			AddLine(a->name + " " + spd->spelldesc + ", " + spd->spelldesc2 +
 					tot + spd->spelltarget + ".");
+
+#if EXPORT_JSON
+			jsonWriter->Key("name");
+			jsonWriter->String(a->name.Str());
+
+			jsonWriter->Key("description");
+			jsonWriter->String(spd->spelldesc);
+
+			jsonWriter->Key("description2");
+			jsonWriter->String(spd->spelldesc2);
+
+			jsonWriter->Key("total");
+			jsonWriter->Int(tot);
+
+			jsonWriter->Key("target");
+			jsonWriter->String(spd->spelltarget);
+#endif
 		}
 	}
+
+#if EXPORT_JSON
+	jsonWriter->EndObject();
+#endif
 }
 

@@ -45,6 +45,11 @@ class ARegionArray;
 #include "object.h"
 #include <map>
 
+#define AC_STRING "%s Nexus is a magical place: the entryway " \
+"to the world of %s. Enjoy your stay; the city guards should " \
+"keep you safe as long as you should choose to stay. However, rumor " \
+"has it that once you have left the Nexus, you can never return."
+
 /* Weather Types */
 enum {
 	W_NORMAL,
@@ -168,6 +173,18 @@ class ARegion : public AListElem
 		ARegion(int, int);
 		~ARegion();
 		void Setup();
+
+#if EXPORT_JSON
+		void WriteProductsJSON(AreportJSON *, Faction *, int);
+		void WriteMarketsJSON(AreportJSON *, Faction *, int);
+		void WriteEconomyJSON(AreportJSON *, Faction *, int);
+		void WriteExitsJSON(AreportJSON *, ARegionList *pRegs, int *exits_seen);
+		void WriteReportJSON(AreportJSON *f, Faction *fac, int month,
+			ARegionList *pRegions);
+		void ShortPrintJSON(Writer<StringBuffer> *f, ARegionList *pRegs);
+		void PrintJSON(AreportJSON *f, ARegionList *pRegs);
+		void WagesForReportJSON(AreportJSON *f);
+#endif
 
 		void ZeroNeighbors();
 		void SetName(char const *);
@@ -451,6 +468,10 @@ class ARegionList : public AList
 		int numberofgates;
 		int numLevels;
 		ARegionArray **pRegionArrays;
+
+#if EXPORT_JSON
+		void CreateBattlegroundWorld();
+#endif
 
 	public:
 		//

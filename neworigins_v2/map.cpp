@@ -1178,7 +1178,7 @@ void ARegionList::InitSetupGates(int level)
 
 void ARegionList::FixUnconnectedRegions()
 {
-	ARegion *r, *head, *tail, *neighbors[NDIRS], *n;
+	ARegion *r = NULL, *head, *tail, *neighbors[NDIRS], *n;
 	int attempts, max, i, j, count, offset, x, y, xscale, yscale;
 	Object *o;
 
