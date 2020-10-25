@@ -93,6 +93,11 @@ void Battle::FreeRound(Army * att,Army * def, int ass)
 	bool overwhelmed = IsArmyOverwhelmedBy(def, att);
 	if (overwhelmed) {
 		AddLine(*(def->leader->name) + " is overwhelmed.");
+
+#if EXPORT_JSON
+		jsonWriter->Key("overwhelmed");
+		jsonWriter->Bool(true);
+#endif
 	}
 
 #if EXPORT_JSON

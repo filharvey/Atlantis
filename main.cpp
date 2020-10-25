@@ -43,6 +43,8 @@ void usage()
 	Awrite("atlantis genrules <introfile> <cssfile> <rules-outputfile>");
 	Awrite("");
 	Awrite("atlantis check <orderfile> <checkfile>");
+	Awrite("");
+	Awrite("atlantis battle <jsonfile> <count>");
 }
 
 int main(int argc, char *argv[])
