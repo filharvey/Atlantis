@@ -124,7 +124,7 @@ Soldier::Soldier(Unit * u,Object * o,int regtype,int r,int ass)
 	if (ItemDefs[r].type & IT_MONSTER) {
 		MonType *mp = FindMonster(ItemDefs[r].abr,
 				(ItemDefs[r].type & IT_ILLUSION));
-		if (u->type == U_WMON)
+		if((u->type == U_WMON) || (ItemDefs[r].flags & ItemType::MANPRODUCE))
 			name = AString(mp->name) + " in " + *(unit->name);
 		else
 			name = AString(mp->name) + " controlled by " + *(unit->name);
@@ -474,7 +474,7 @@ void Soldier::RestoreItems()
 					unit->items.GetNum(healitem) + healing);
 		} else if (healitem == I_HEALPOTION) {
 			unit->items.SetNum(healitem,
-					unit->items.GetNum(healitem)+healing/10);
+					unit->items.GetNum(healitem)+1);
 		}
 	}
 	if (weapon != -1)
@@ -1108,6 +1108,22 @@ int Army::NumFront()
 	return (canfront + notfront - canbehind);
 }
 
+int Army::NumBehind() {
+	return NumAlive() - NumFront();
+}
+
+int Army::NumFrontHits() {
+	int totHits = 0;
+
+	for (int i = 0; i < canfront; i++) {
+		totHits += soldiers[i]->maxhits;
+	}
+	for (int i = canbehind; i < notfront; i++) {
+		totHits += soldiers[i]->maxhits;
+	}
+	return totHits;
+}
+
 Soldier * Army::GetAttacker(int i,int &behind)
 {
 	Soldier * retval = soldiers[i];
@@ -1129,9 +1145,13 @@ Soldier * Army::GetAttacker(int i,int &behind)
 	return retval;
 }
 
-int Army::GetTargetNum(char const *special)
+int Army::GetTargetNum(char const *special, int canAttackBehind)
 {
 	int tars = NumFront();
+	if (canAttackBehind) {
+		tars = NumAlive();
+	}
+
 	if (tars == 0) {
 		canfront = canbehind;
 		notfront = notbehind;
@@ -1161,6 +1181,7 @@ int Army::GetTargetNum(char const *special)
 		}
 		if (validtargs) {
 			int targ = getrandom(validtargs);
+
 			for (i = start; i < notfront; i++) {
 				if (i == canfront) i = canbehind;
 				if (CheckSpecialTarget(special, i)) {
@@ -1170,8 +1191,13 @@ int Army::GetTargetNum(char const *special)
 		}
 	} else {
 		int i = getrandom(tars);
-		if (i<canfront) return i;
-		return i + canbehind - canfront;
+		if (canAttackBehind) {
+			return i;
+		}
+		else {
+			if (i < canfront) return i;
+			return i + canbehind - canfront;
+		}
 	}
 
 	return -1;
@@ -1256,7 +1282,7 @@ int Army::RemoveEffects(int num, char const *effect)
 
 int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attackType,
 		int attackLevel, int flags, int weaponClass, char const *effect,
-		int mountBonus, Soldier *attacker, Army *attackers)
+		int mountBonus, Soldier *attacker, Army *attackers, int attackbehind)
 {
 	/* 1. Check against Global effects (not sure how yet) */
 	/* 2. Attack shield */
@@ -1302,7 +1328,7 @@ int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attack
 	int ret = 0;
 	for (int i = 0; i < numAttacks; i++) {
 		/* 3. Get the target */
-		int tarnum = GetTargetNum(special);
+		int tarnum = GetTargetNum(special, attackbehind);
 		if (tarnum == -1) continue;
 		Soldier * tar = GetTarget(tarnum);
 		int tarFlags = 0;

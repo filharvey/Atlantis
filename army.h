@@ -119,17 +119,19 @@ class Army
 
 		int Broken();
 		int NumAlive();
+		int NumBehind();
 		int NumSpoilers();
 		int CanAttack();
 		int NumFront();
+		int NumFrontHits();
 		Soldier *GetAttacker( int, int & );
 		int GetEffectNum(char const *effect);
-		int GetTargetNum(char const *special = NULL);
+		int GetTargetNum(char const *special = NULL, int canAttackBehind = 0);
 		Soldier *GetTarget( int );
 		int RemoveEffects(int num, char const *effect);
 		int DoAnAttack(Battle *, char const *special, int numAttacks, int attackType,
 				int attackLevel, int flags, int weaponClass, char const *effect,
-				int mountBonus, Soldier *attacker, Army *attackers);
+				int mountBonus, Soldier *attacker, Army *attackers, int attackbehind);
 		void Kill(int);
 		void Reset();
 

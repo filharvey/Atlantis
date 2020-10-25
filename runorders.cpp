@@ -2780,7 +2780,8 @@ int Game::DoGiveOrder(ARegion *r, Unit *u, GiveOrder *o)
 			r->DisbandInRegion(o->item, amt);
 			temp = "Disbands ";
 		} else if (Globals->RELEASE_MONSTERS &&
-				(ItemDefs[o->item].type & IT_MONSTER)) {
+				(ItemDefs[o->item].type & IT_MONSTER) &&
+					!(ItemDefs[o->item].flags & ItemType::MANPRODUCE)) {
 			temp = "Releases ";
 			u->items.SetNum(o->item, u->items.GetNum(o->item) - amt);
 			if (Globals->WANDERING_MONSTERS_EXIST) {

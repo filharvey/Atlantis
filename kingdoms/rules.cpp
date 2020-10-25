@@ -232,6 +232,7 @@ static GameDefs g = {
 	0,	// UNDEATH_CONTAGION
 	0,   // REGIONS_ECONOMY
 	0, // ADVANCED_TACTICS
+	0,	// OVERWHELMING
 };
 
 GameDefs *Globals = &g;

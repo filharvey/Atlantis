@@ -94,7 +94,9 @@ class ItemType
 			// inputs
 			SKILLOUT = 0x10,
 			// This item cannot be transported.
-			NOTRANSPORT = 0x20
+			NOTRANSPORT = 0x20,
+			// Produced monsters
+			MANPRODUCE = 0x40
 		};
 		int flags;
 

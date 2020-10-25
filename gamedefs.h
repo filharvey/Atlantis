@@ -711,6 +711,9 @@ public:
 
 	// Replaces free round by combat bonus for first rounds
 	int ADVANCED_TACTICS;
+
+	// Combat overwhelming.
+	int OVERWHELMING;
 };
 
 extern GameDefs *Globals;

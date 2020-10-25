@@ -1469,7 +1469,7 @@ int Game::RunPhanUndead(ARegion *r,Unit *u)
 			max = level * level;
 		} else {
 			create = I_ILICH;
-			max = 1;
+			max = order->level;
 		}
 	}
 
@@ -1503,7 +1503,7 @@ int Game::RunPhanBeasts(ARegion *r,Unit *u)
 			max = level * level;
 		} else {
 			create = I_IDRAGON;
-			max = 1;
+			max = order->level;
 		}
 	}
 
@@ -1688,7 +1688,7 @@ int Game::RunTeleport(ARegion *r,Object *o,Unit *u)
 	if (!val) return 0;
 
 	int level = u->GetSkill(S_TELEPORTATION);
-	int maxweight = level * 30;
+	int maxweight = level * 50;
 
 	if (u->Weight() > maxweight) {
 		u->Error("CAST: Can't carry that much when teleporting.");
