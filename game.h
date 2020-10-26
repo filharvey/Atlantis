@@ -220,7 +220,7 @@ private:
 
 	void ModifyMonsterAttackLevel(char const *mon, int lev);
 	void ModifyMonsterDefense(char const *mon, int defenseType, int level);
-	void ModifyMonsterAttacksAndHits(char const *mon, int num, int hits, int regen);
+	void ModifyMonsterAttacksAndHits(char const *mon, int num, int hits, int regen, int hitDamage);
 	void ModifyMonsterSkills(char const *mon, int tact, int stealth, int obs);
 	void ModifyMonsterSpecial(char const *mon, char const *special, int lev);
 	void ModifyMonsterSpoils(char const *mon, int silver, int spoilType);
@@ -228,8 +228,9 @@ private:
 
 	void ModifyWeaponSkills(char const *weap, char *baseSkill, char *orSkill);
 	void ModifyWeaponFlags(char const *weap, int flags);
-	void ModifyWeaponAttack(char const *weap, int wclass, int attackType, int numAtt);
+	void ModifyWeaponAttack(char const *weap, int wclass, int attackType, int numAtt, int hitDamage);
 	void ModifyWeaponBonuses(char const *weap, int attack, int defense, int vsMount);
+	void ModifyWeaponBonusMalus(char const *weap, int index, char *weaponAbbr, int attackModifer, int defenseModifer);
 
 	void ModifyArmorFlags(char const *armor, int flags);
 	void ModifyArmorSaveFrom(char const *armor, int from);
@@ -272,7 +273,7 @@ private:
 	void ModifySpecialShields(char const *special, int index, int type);
 	void ModifySpecialDefenseMods(char const *special, int index, int type, int val);
 	void ModifySpecialDamage(char const *special, int index, int type, int min,
-			int val, int flags, int cls, char const *effect);
+			int val, int flags, int cls, char const *effect, int hitDamage);
 
 	void ModifyEffectFlags(char const *effect, int flags);
 	void ModifyEffectAttackMod(char const *effect, int val);

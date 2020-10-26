@@ -192,6 +192,8 @@ class MonType
 		int number;
 		char const *name;
 		char const *abbr;
+
+		int hitDamage;
 };
 
 extern MonType *MonDefs;
@@ -208,6 +210,16 @@ enum {
 	NUM_WEAPON_CLASSES
 };
 
+
+#define MAX_WEAPON_BM_TARGETS	4
+
+// Describes bonus/mauls against another weapon
+class WeaponBonusMalus {
+	public:
+		char const *weaponAbbr;	// weapon abbreviation
+		int attackModifer;		// how much increase/decrase attack versus this weapon
+		int defenseModifer;		// how much increase/decrase defense versus this weapon
+};
 
 class WeaponType
 {
@@ -256,6 +268,10 @@ class WeaponType
 		int attackBonus;
 		int defenseBonus;
 		int mountBonus;
+
+		int hitDamage;
+
+		WeaponBonusMalus bonusMalus[MAX_WEAPON_BM_TARGETS];
 };
 
 extern WeaponType *WeaponDefs;
@@ -328,6 +344,8 @@ class BattleItemType
 		int flags;
 		char const *special;
 		int skillLevel;
+
+		int hitDamage;
 };
 
 extern BattleItemType *BattleItemDefs;

@@ -61,6 +61,7 @@ Soldier::Soldier(Unit * u,Object * o,int regtype,int r,int ass)
 	weapon = -1;
 
 	attacks = 1;
+	hitDamage = 1;
 	attacktype = ATTACK_COMBAT;
 
 	special = NULL;
@@ -146,6 +147,7 @@ Soldier::Soldier(Unit * u,Object * o,int regtype,int r,int ass)
 		if (hits < 1) hits = 1;
 		maxhits = hits;
 		attacks = mp->numAttacks;
+		hitDamage = mp->hitDamage;
 		if (!attacks) attacks = 1;
 		special = mp->special;
 		slevel = mp->specialLevel;
@@ -1145,7 +1147,7 @@ Soldier * Army::GetAttacker(int i,int &behind)
 	return retval;
 }
 
-int Army::GetTargetNum(char const *special, int canAttackBehind)
+int Army::GetTargetNum(char const *special, bool canAttackBehind)
 {
 	int tars = NumFront();
 	if (canAttackBehind) {
@@ -1280,9 +1282,22 @@ int Army::RemoveEffects(int num, char const *effect)
 	return(ret);
 }
 
+WeaponBonusMalus* GetWeaponBonusMalus(WeaponType *weapon, WeaponType *target) {
+	for (int i = 0; i < MAX_WEAPON_BM_TARGETS; i++) {
+		WeaponBonusMalus *bm = &weapon->bonusMalus[i];
+		if (!bm->weaponAbbr) continue;
+
+		if (AString(bm->weaponAbbr) == target->abbr) {
+			return bm;
+		}
+	}
+
+	return NULL;
+}
+
 int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attackType,
 		int attackLevel, int flags, int weaponClass, char const *effect,
-		int mountBonus, Soldier *attacker, Army *attackers, int attackbehind)
+		int mountBonus, Soldier *attacker, Army *attackers, bool attackbehind, int attackDamage)
 {
 	/* 1. Check against Global effects (not sure how yet) */
 	/* 2. Attack shield */
@@ -1365,6 +1380,25 @@ int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attack
 		/* 4.3 Add bonuses versus mounted */
 		if (tar->riding != -1) attackLevel += mountBonus;
 
+		// 4.4 Check for weapon inflicted bonuses
+		if (attacker->weapon && tar->weapon) {
+			WeaponType *attackerWeapon = FindWeapon(ItemDefs[attacker->weapon].abr);
+			WeaponType *targetWeapon = FindWeapon(ItemDefs[tar->weapon].abr);
+
+			WeaponBonusMalus *attackerBm = GetWeaponBonusMalus(attackerWeapon, targetWeapon);
+			WeaponBonusMalus *defenderBm = GetWeaponBonusMalus(targetWeapon, attackerWeapon);
+
+			// attacker will get bonus to attack if defender uses weapon to which attackers weapon has bonus
+			if (attackerBm) {
+				attackLevel += attackerBm->attackModifer;
+			}
+
+			// defender will get bonus to defense if attacker uses weapon to which defenders weapon has bonus
+			if (defenderBm) {
+				tlev += defenderBm->defenseModifer;
+			}
+		}
+
 		/* 5. Attack soldier */
 		if (attackType != NUM_ATTACK_TYPES) {
 			if (!(flags & WeaponType::ALWAYSREADY)) {
@@ -1378,7 +1412,7 @@ int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attack
 			}
 
 			if (combat) {
-				/* 4.4 Add advanced tactics bonus */
+				/* 5.1 Add advanced tactics bonus */
 				if (!Hits(attackLevel + attackers->tactics_bonus, tlev + tactics_bonus)) {
 					continue;
 				}
@@ -1397,7 +1431,7 @@ int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attack
 			}
 
 			/* 8. Seeya! */
-			Kill(tarnum);
+			Kill(tarnum, attackDamage);
 			ret++;
 			if ((ItemDefs[tar->race].type & IT_MAN) &&
 				(ItemDefs[attacker->race].type & IT_UNDEAD)) {
@@ -1417,7 +1451,7 @@ int Army::DoAnAttack(Battle * b, char const *special, int numAttacks, int attack
 	return ret;
 }
 
-void Army::Kill(int killed)
+void Army::Kill(int killed, int damage)
 {
 	Soldier *temp = soldiers[killed];
 
@@ -1425,8 +1459,10 @@ void Army::Kill(int killed)
 
 	if (Globals->ARMY_ROUT == GameDefs::ARMY_ROUT_HITS_INDIVIDUAL)
 		hitsalive--;
-	temp->hits--;
-	temp->damage++;
+
+	temp->damage += min(temp->hits, damage);
+	temp->hits = max(0, temp->hits - damage);
+	
 	if (temp->hits > 0) return;
 	temp->unit->losses++;
 	if (Globals->ARMY_ROUT == GameDefs::ARMY_ROUT_HITS_FIGURE) {

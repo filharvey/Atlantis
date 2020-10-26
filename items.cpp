@@ -62,6 +62,18 @@ WeaponType *FindWeapon(char const *abbr)
 	return NULL;
 }
 
+ItemType *FindItem(char const *abbr)
+{
+	if (abbr == NULL) return NULL;
+	for (int i = 0; i < NITEMS; i++) {
+		if (ItemDefs[i].abr == NULL) continue;
+
+		if (AString(abbr) == ItemDefs[i].abr) return &ItemDefs[i];
+	}
+
+	return NULL;
+}
+
 MountType *FindMount(char const *abbr)
 {
 	if (abbr == NULL) return NULL;
@@ -304,6 +316,14 @@ static AString EffectStr(char const *effect)
 	return temp;
 }
 
+static AString AttackDamageDescription(const int damage) {
+	AString s;
+	
+	s = AString("attack deals ") + damage + " hitpoint damage";
+
+	return s;
+}
+
 AString ShowSpecial(char const *special, int level, int expandLevel, int fromItem)
 {
 	AString temp;
@@ -506,7 +526,7 @@ AString ShowSpecial(char const *special, int level, int expandLevel, int fromIte
 		if (!expandLevel) {
 			temp += " times the skill level of the mage";
 		}
-		temp += AString(" ") + AttType(spd->damage[i].type) + " attacks.";
+		temp += AString(" ") + AttType(spd->damage[i].type) + " attacks and each " + AttackDamageDescription(spd->damage[i].hitDamage) + ".";
 		if (spd->damage[i].effect) {
 			temp += " Each attack causes the target to be effected by ";
 			temp += EffectStr(spd->damage[i].effect);
@@ -759,13 +779,14 @@ AString *ItemDescription(int item, int full)
 			*temp += AString("all skills to level ") + mt->defaultlevel + ".";
 		}
 	}
+	
 	if ((ItemDefs[item].type & IT_MONSTER) &&
 			!(ItemDefs[item].flags & ItemType::MANPRODUCE)) {
 		*temp += " This is a monster.";
 		MonType *mp = FindMonster(ItemDefs[item].abr,
 				(ItemDefs[item].type & IT_ILLUSION));
-		*temp += AString(" This monster attacks with a combat skill of ") +
-			mp->attackLevel + ".";
+		*temp += AString(" This monster attacks with a combat skill of ") + mp->attackLevel;
+
 		for (int c = 0; c < NUM_ATTACK_TYPES; c++) {
 			*temp += AString(" ") + MonResist(c,mp->defense[c], full);
 		}
@@ -782,7 +803,14 @@ AString *ItemDescription(int item, int full)
 			if (!atts) atts = 1;
 			*temp += AString(" This monster has ") + atts + " melee " +
 				((atts > 1)?"attacks":"attack") + " per round and takes " +
-				hits + " " + ((hits > 1)?"hits":"hit") + " to kill.";
+				hits + " " + ((hits > 1)?"hits":"hit") + " to kill";
+
+			if (atts > 0) {
+				*temp += AString(" and each ") + AttackDamageDescription(mp->hitDamage);
+			}
+
+			*temp += AString(".");
+
 			if (regen > 0) {
 				*temp += AString(" This monsters regenerates ") + regen +
 					" hits per round of battle.";
@@ -806,18 +834,19 @@ AString *ItemDescription(int item, int full)
 
 	if(ItemDefs[item].flags & ItemType::MANPRODUCE) {
 		*temp += " This is a free-moving-item (FMI).";
-		MonType *mp = FindMonster(ItemDefs[item].abr,
-				(ItemDefs[item].type & IT_ILLUSION));
-		*temp += AString(" This FMI attacks with a combat skill of ") +
-			mp->attackLevel + ".";
+		MonType *mp = FindMonster(ItemDefs[item].abr, (ItemDefs[item].type & IT_ILLUSION));
+		*temp += AString(" This FMI attacks with a combat skill of ") + mp->attackLevel + ".";
+		
 		for (int c = 0; c < NUM_ATTACK_TYPES; c++) {
 			*temp += AString(" ") + FMIResist(c,mp->defense[c], full);
 		}
+		
 		if (mp->special && mp->special != NULL) {
 			*temp += AString(" ") +
 				"FMI can cast " +
 				ShowSpecial(mp->special, mp->specialLevel, 1, 0);
 		}
+
 		if (full) {
 			int hits = mp->hits;
 			int atts = mp->numAttacks;
@@ -826,10 +855,16 @@ AString *ItemDescription(int item, int full)
 			if (!atts) atts = 1;
 			*temp += AString(" This FMI has ") + atts + " melee " +
 				((atts > 1)?"attacks":"attack") + " per round and takes " +
-				hits + " " + ((hits > 1)?"hits":"hit") + " to kill.";
+				hits + " " + ((hits > 1)?"hits":"hit") + " to kill";
+
+			if (atts > 0) {
+				*temp += AString(" and each ") + AttackDamageDescription(mp->hitDamage);
+			}
+
+			*temp += AString(".");
+
 			if (regen > 0) {
-				*temp += AString(" This FMI regenerates ") + regen +
-					" hits per round of battle.";
+				*temp += AString(" This FMI regenerates ") + regen + " hits per round of battle.";
 			}
 			*temp += AString(" This FMI has a tactics score of ") +
 				mp->tactics + ", a stealth score of " + mp->stealth +
@@ -854,7 +889,7 @@ AString *ItemDescription(int item, int full)
 	if (ItemDefs[item].type & IT_WEAPON) {
 		WeaponType *pW = FindWeapon(ItemDefs[item].abr);
 		*temp += " This is a ";
-		*temp += WeapType(pW->flags, pW->weapClass) + " weapon.";
+		*temp += WeapType(pW->flags, pW->weapClass) + " weapon and each " + AttackDamageDescription(pW->hitDamage) + ".";
 		if (pW->flags & WeaponType::NEEDSKILL) {
 			pS = FindSkill(pW->baseSkill);
 			if (pS) {
@@ -962,6 +997,30 @@ AString *ItemDescription(int item, int full)
 				*temp += "1 attack every ";
 				if (atts == 1) *temp += "round .";
 				else *temp += AString(atts) + " rounds.";
+			}
+
+			for (int i = 0; i < MAX_WEAPON_BM_TARGETS; i++) {
+				WeaponBonusMalus *bm = &pW->bonusMalus[i];
+				if (!bm->weaponAbbr) continue;
+				if (bm->attackModifer == 0 && bm->defenseModifer == 0) continue;
+
+				ItemType *target =  FindItem(bm->weaponAbbr);
+
+				*temp += AString(" Wielders of this weapon will get ");
+
+				if (bm->attackModifer != 0) {
+					*temp += AString((bm->attackModifer > 0) ? "bonus of ":"penalty of ") + abs(bm->attackModifer) + " on combat attack";
+				}
+
+				if (bm->defenseModifer != 0) {
+					if (bm->attackModifer != 0) {
+						*temp += AString(" and ");
+					}
+
+					*temp += AString((bm->defenseModifer > 0) ? "bonus of ":"penalty of ") + abs(bm->defenseModifer) + " on combat defense";
+				}
+
+				*temp += AString(" against ") + target->name + " [" + target->abr + "].";
 			}
 		}
 	}
