@@ -204,6 +204,8 @@ void Battle::DoSpecialAttack(int round, Soldier *a, Army *attackers,
 	for (i = 0; i < 4; i++) {
 		if (spd->damage[i].type == -1) continue;
 		int times = spd->damage[i].value;
+		int hitDamage = spd->damage[i].hitDamage;
+
 		if (spd->effectflags & SpecialType::FX_USE_LEV)
 			times *= a->slevel;
 		int realtimes = spd->damage[i].minnum + getrandom(times) +
@@ -212,7 +214,7 @@ void Battle::DoSpecialAttack(int round, Soldier *a, Army *attackers,
 				spd->damage[i].type, a->slevel,
 				spd->damage[i].flags, spd->damage[i].dclass,
 				spd->damage[i].effect, 0, a, attackers,
-				canattackback);
+				canattackback, hitDamage);
 		if (spd->effectflags & SpecialType::FX_DONT_COMBINE && num != -1) {
 			if (spd->damage[i].effect == NULL) {
 				results[dam] = AString("killing ") + num;

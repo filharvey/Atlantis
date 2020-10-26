@@ -29,6 +29,8 @@
 #include <map>
 using namespace std;
 
+WeaponBonusMalus* GetWeaponBonusMalus(WeaponType *, WeaponType *);
+
 class Soldier;
 class Army;
 
@@ -80,6 +82,7 @@ class Soldier {
 		int attacktype;
 		int askill;
 		int attacks;
+		int hitDamage;
 		char const *special;
 		int slevel;
 
@@ -126,13 +129,13 @@ class Army
 		int NumFrontHits();
 		Soldier *GetAttacker( int, int & );
 		int GetEffectNum(char const *effect);
-		int GetTargetNum(char const *special = NULL, int canAttackBehind = 0);
+		int GetTargetNum(char const *special = NULL, bool canAttackBehind = false);
 		Soldier *GetTarget( int );
 		int RemoveEffects(int num, char const *effect);
 		int DoAnAttack(Battle *, char const *special, int numAttacks, int attackType,
 				int attackLevel, int flags, int weaponClass, char const *effect,
-				int mountBonus, Soldier *attacker, Army *attackers, int attackbehind);
-		void Kill(int);
+				int mountBonus, Soldier *attacker, Army *attackers, bool attackbehind, int attackDamage);
+		void Kill(int killed, int damage);
 		void Reset();
 
 		//
